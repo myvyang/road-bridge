@@ -18,6 +18,7 @@ test("exports the road asset map shell", async () => {
   assert.match(html, /右侧只显示这条路本身的收费权、运营和归属信息/);
   assert.match(html, /fallback-routes/);
   assert.doesNotMatch(html, /(?:href|src)="\/(?!road-bridge\/)/);
+  assert.doesNotMatch(html, /待核验|样例|数据来源状态|需要穿透/);
   assert.doesNotMatch(html, /map-controls|map-brand|asset-strip/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/);
 });
@@ -28,6 +29,7 @@ test("exports a stock asset list without the map workspace", async () => {
   assert.match(html, /江苏宁沪高速公路股份有限公司/);
   assert.match(html, /沪宁高速江苏段/);
   assert.match(html, /地图中查看/);
+  assert.doesNotMatch(html, /待核验|样例|数据来源状态|需要穿透/);
   assert.doesNotMatch(html, /id="asset-map"/);
 });
 

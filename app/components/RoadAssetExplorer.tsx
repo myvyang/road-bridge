@@ -4,30 +4,21 @@ import Link from "next/link";
 import {
   Building2,
   CalendarClock,
-  Database,
   ExternalLink,
   GitBranch,
   Layers,
   Route,
   Search,
-  ShieldAlert,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   getCompany,
   getRelatedAssets,
+  isPublicAssetValue,
   listedRoadCompanies,
   roadAssets,
-  sourceLabels,
-  type DataQuality,
   type RoadAsset,
 } from "../data/roadAssets";
-
-const qualityClass: Record<DataQuality, string> = {
-  sample: "sample",
-  needs_source: "source",
-  verified: "verified",
-};
 
 type AMapPolyline = {
   on: (eventName: "click", handler: () => void) => void;
@@ -440,10 +431,6 @@ function AssetDetail({ asset }: { asset: RoadAsset }) {
   return (
     <div className="panel-inner">
       <div>
-        <span className={`status-pill ${qualityClass[asset.sourceStatus]}`}>
-          <ShieldAlert size={13} />
-          {sourceLabels[asset.sourceStatus]}
-        </span>
         <h2 className="detail-title">{asset.name}</h2>
         <p className="detail-summary">{asset.corridor}</p>
       </div>
@@ -523,25 +510,6 @@ function AssetDetail({ asset }: { asset: RoadAsset }) {
           ))}
         </div>
       </section>
-
-      <section className="detail-section">
-        <h3 className="section-title">
-          <Database size={16} />
-          数据来源状态
-        </h3>
-        <div className="source-note">{asset.sourceNote}</div>
-      </section>
-
-      <section className="detail-section">
-        <h3 className="section-title">需要穿透</h3>
-        <div className="relation-list">
-          {asset.watchItems.map((item) => (
-            <div className="relation-item readonly" key={item}>
-              <strong>{item}</strong>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
@@ -555,6 +523,10 @@ function Fact({
   value: string;
   wide?: boolean;
 }) {
+  if (!isPublicAssetValue(value)) {
+    return null;
+  }
+
   return (
     <div className={wide ? "fact wide" : "fact"}>
       <span>{label}</span>

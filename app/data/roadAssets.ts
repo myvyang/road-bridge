@@ -1,5 +1,3 @@
-export type DataQuality = "sample" | "needs_source" | "verified";
-
 export type ListedRoadCompany = {
   id: string;
   name: string;
@@ -34,16 +32,12 @@ export type RoadAsset = {
   freightShare: string;
   geometry: RoadGeometry;
   relatedAssetIds: string[];
-  sourceStatus: DataQuality;
-  sourceNote: string;
-  watchItems: string[];
 };
 
-export const sourceLabels: Record<DataQuality, string> = {
-  sample: "样例",
-  needs_source: "待核验",
-  verified: "已核验",
-};
+export function isPublicAssetValue(value: string) {
+  const trimmed = value.trim();
+  return Boolean(trimmed) && trimmed !== "—";
+}
 
 export const listedRoadCompanies: ListedRoadCompany[] = [
   {
@@ -89,14 +83,14 @@ export const roadAssets: RoadAsset[] = [
     province: "江苏",
     assetType: "高速公路",
     operator: "上市公司及附属运营主体",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待从招股书、年报和资产评估披露入库",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 274,
-    annualRevenue: "待按单路披露口径入库",
-    traffic: "待补日均车流、客货结构",
-    freightShare: "待补货车占比",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -107,9 +101,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["jiangsu-ningchang", "anhui-hening", "zhejiang-huhangyong"],
-    sourceStatus: "sample",
-    sourceNote: "线路用于验证页面结构，收费权字段未做公告级核验。",
-    watchItems: ["平行线路分流", "养护施工扰动", "收费权到期与续期口径"],
   },
   {
     id: "jiangsu-ningchang",
@@ -118,15 +109,15 @@ export const roadAssets: RoadAsset[] = [
     corridor: "南京都市圈至苏南通道",
     province: "江苏",
     assetType: "高速公路",
-    operator: "待核验",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    operator: "—",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 87,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -137,9 +128,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["jiangsu-huning"],
-    sourceStatus: "needs_source",
-    sourceNote: "需要先确认上市公司披露中的资产名称、范围和权益比例。",
-    watchItems: ["与沪宁通道的客货流联动", "控股路产和参股路产区分"],
   },
   {
     id: "zhejiang-huhangyong",
@@ -149,14 +137,14 @@ export const roadAssets: RoadAsset[] = [
     province: "浙江",
     assetType: "高速公路",
     operator: "上市公司及附属运营主体",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 248,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -167,9 +155,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["jiangsu-huning", "zhejiang-shangsan"],
-    sourceStatus: "sample",
-    sourceNote: "线路用于验证跨公司、跨省通道关系，运营数据待核验。",
-    watchItems: ["杭州湾和沪杭交通结构变化", "改扩建资本开支"],
   },
   {
     id: "zhejiang-shangsan",
@@ -178,15 +163,15 @@ export const roadAssets: RoadAsset[] = [
     corridor: "浙江南北向补充通道",
     province: "浙江",
     assetType: "高速公路",
-    operator: "待核验",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    operator: "—",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 142,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -197,9 +182,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["zhejiang-huhangyong"],
-    sourceStatus: "needs_source",
-    sourceNote: "需要从公司披露中确认收费里程、权益比例和收入披露粒度。",
-    watchItems: ["旅游和区域产业流量波动", "单路收入披露粒度"],
   },
   {
     id: "anhui-hening",
@@ -209,14 +191,14 @@ export const roadAssets: RoadAsset[] = [
     province: "安徽",
     assetType: "高速公路",
     operator: "上市公司及附属运营主体",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 134,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -227,9 +209,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["jiangsu-huning"],
-    sourceStatus: "sample",
-    sourceNote: "作为安徽至长三角走廊样例，收费权字段待核验。",
-    watchItems: ["长三角跨省通道联动", "货车收费政策变化"],
   },
   {
     id: "shenzhen-jihe",
@@ -239,14 +218,14 @@ export const roadAssets: RoadAsset[] = [
     province: "广东",
     assetType: "高速公路",
     operator: "上市公司及附属运营主体",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 45,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -257,9 +236,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["shenzhen-meiguan"],
-    sourceStatus: "needs_source",
-    sourceNote: "需要穿透上市公司、附属公司和政府安排中的资产边界。",
-    watchItems: ["城市路网分流", "改扩建和政府回购安排"],
   },
   {
     id: "shenzhen-meiguan",
@@ -268,15 +244,15 @@ export const roadAssets: RoadAsset[] = [
     corridor: "深圳中轴北向通道",
     province: "广东",
     assetType: "高速公路",
-    operator: "待核验",
-    openedAt: "待核验",
-    tollTerm: "待核验",
-    remainingTerm: "待计算",
-    buildOrAcquisitionCost: "待核验",
+    operator: "—",
+    openedAt: "—",
+    tollTerm: "—",
+    remainingTerm: "—",
+    buildOrAcquisitionCost: "—",
     lengthKm: 19,
-    annualRevenue: "待核验",
-    traffic: "待核验",
-    freightShare: "待核验",
+    annualRevenue: "—",
+    traffic: "—",
+    freightShare: "—",
     geometry: {
       coordinateSystem: "gcj02",
       path: [
@@ -287,9 +263,6 @@ export const roadAssets: RoadAsset[] = [
       ],
     },
     relatedAssetIds: ["shenzhen-jihe"],
-    sourceStatus: "needs_source",
-    sourceNote: "收费安排和政府补偿口径复杂，不能只按公司层面利润判断。",
-    watchItems: ["部分路段收费安排", "政府补偿和回购口径"],
   },
 ];
 

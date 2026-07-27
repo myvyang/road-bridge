@@ -3,8 +3,8 @@ import { ArrowLeft, ExternalLink, Route } from "lucide-react";
 import {
   getAssetsByCompany,
   getCompanyBySymbol,
+  isPublicAssetValue,
   listedRoadCompanies,
-  sourceLabels,
 } from "../../data/roadAssets";
 
 export function generateStaticParams() {
@@ -60,43 +60,44 @@ export default async function StockAssetPage({
       </section>
 
       <section className="stock-assets" aria-label="路产清单">
-        {assets.map((asset) => (
-          <article className="stock-asset-card" key={asset.id}>
-            <div>
-              <div className="asset-card-title">
-                <Route size={18} />
-                <h2>{asset.name}</h2>
-              </div>
-              <p>{asset.corridor}</p>
-              <div className="tag-row">
-                <span className="tag">{asset.province}</span>
-                <span className="tag">{asset.assetType}</span>
-                <span className="tag">{asset.lengthKm} km</span>
-                <span className={`status-pill ${asset.sourceStatus === "sample" ? "sample" : "source"}`}>
-                  {sourceLabels[asset.sourceStatus]}
-                </span>
-              </div>
-            </div>
-            <dl className="asset-mini-ledger">
+        {assets.map((asset) => {
+          const ledgerItems = [
+            ["收费期限", asset.tollTerm],
+            ["建设 / 收购成本", asset.buildOrAcquisitionCost],
+            ["年度收入", asset.annualRevenue],
+          ].filter(([, value]) => isPublicAssetValue(value));
+
+          return (
+            <article className="stock-asset-card" key={asset.id}>
               <div>
-                <dt>收费期限</dt>
-                <dd>{asset.tollTerm}</dd>
+                <div className="asset-card-title">
+                  <Route size={18} />
+                  <h2>{asset.name}</h2>
+                </div>
+                <p>{asset.corridor}</p>
+                <div className="tag-row">
+                  <span className="tag">{asset.province}</span>
+                  <span className="tag">{asset.assetType}</span>
+                  <span className="tag">{asset.lengthKm} km</span>
+                </div>
               </div>
-              <div>
-                <dt>建设 / 收购成本</dt>
-                <dd>{asset.buildOrAcquisitionCost}</dd>
-              </div>
-              <div>
-                <dt>年度收入</dt>
-                <dd>{asset.annualRevenue}</dd>
-              </div>
-            </dl>
-            <Link className="map-link" href={`/?asset=${asset.id}`}>
-              地图中查看
-              <ExternalLink size={14} />
-            </Link>
-          </article>
-        ))}
+              {ledgerItems.length ? (
+                <dl className="asset-mini-ledger">
+                  {ledgerItems.map(([label, value]) => (
+                    <div key={label}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
+              <Link className="map-link" href={`/?asset=${asset.id}`}>
+                地图中查看
+                <ExternalLink size={14} />
+              </Link>
+            </article>
+          );
+        })}
       </section>
     </main>
   );

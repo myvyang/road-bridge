@@ -12,7 +12,7 @@
 - 点击地图线路或地图上的路产按钮后，只展示这条路本身的收费权、运营口径、归属股票和路产关系。
 - 路产详情中的股票代码可进入股票资产清单页。
 - 股票资产清单页不带地图，只展示该股票下面的路产资产；点击路产可回到地图并选中对应线路。
-- 所有样例数据都显式标记为 `样例` 或 `待核验`，避免误当成研究结论。
+- 公开页面只展示路产事实；未确认字段留空，核验状态和研究备注不放到网页上。
 
 ## 数据原则
 
@@ -85,7 +85,7 @@ GITHUB_PAGES=true GITHUB_PAGES_BASE_PATH=/road-bridge npm run build:pages
 
 - `app/components/RoadAssetExplorer.tsx`：地图页和右侧路产详情。
 - `app/stocks/[symbol]/page.tsx`：股票资产清单页。
-- `app/data/roadAssets.ts`：上市公司清单、路产样例数据和字段模型。
+- `app/data/roadAssets.ts`：公开展示用上市公司清单、路产数据和字段模型。
 - `docs/data-model.md`：后续真实数据入库模型。
 - `.github/workflows/pages.yml`：GitHub Pages 静态站发布流程。
 - `project-memory/`：长期开发判断和当前状态。
