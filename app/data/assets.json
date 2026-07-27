@@ -1,0 +1,443 @@
+[
+  {
+    "id": "jiangsu-huning",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "沪宁高速江苏段",
+    "corridor": "上海至南京主通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "operator": "上市公司及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 274,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.309, 31.586],
+        [119.974, 31.651],
+        [119.444, 31.78],
+        [118.796, 31.988]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-ningchang", "anhui-hening", "zhejiang-huhangyong"]
+  },
+  {
+    "id": "jiangsu-ningchang",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "南京至常州高速",
+    "corridor": "南京都市圈至苏南通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "operator": "—",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 87,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [118.886, 31.902],
+        [119.192, 31.812],
+        [119.558, 31.742],
+        [119.946, 31.704]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-huning"]
+  },
+  {
+    "id": "zhejiang-huhangyong",
+    "ownerCompanyId": "zhejiang-expressway",
+    "name": "沪杭甬高速",
+    "corridor": "上海至杭州、宁波核心通道",
+    "province": "浙江",
+    "assetType": "高速公路",
+    "operator": "上市公司及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 248,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.155, 30.274],
+        [120.758, 30.438],
+        [120.75, 30.747],
+        [121.474, 31.231]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-huning", "zhejiang-shangsan"]
+  },
+  {
+    "id": "zhejiang-shangsan",
+    "ownerCompanyId": "zhejiang-expressway",
+    "name": "上三高速",
+    "corridor": "浙江南北向补充通道",
+    "province": "浙江",
+    "assetType": "高速公路",
+    "operator": "—",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 142,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.871, 30.035],
+        [120.911, 29.726],
+        [121.006, 29.501],
+        [121.031, 29.152]
+      ]
+    },
+    "relatedAssetIds": ["zhejiang-huhangyong"]
+  },
+  {
+    "id": "anhui-hening",
+    "ownerCompanyId": "anhui-expressway",
+    "name": "合宁高速",
+    "corridor": "合肥至南京、上海方向通道",
+    "province": "安徽",
+    "assetType": "高速公路",
+    "operator": "上市公司及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 134,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [117.227, 31.82],
+        [117.714, 31.736],
+        [118.318, 31.69],
+        [118.796, 31.988]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-huning"]
+  },
+  {
+    "id": "shenzhen-jihe",
+    "ownerCompanyId": "shenzhen-expressway",
+    "name": "机荷高速",
+    "corridor": "深圳机场至荷坳东西向通道",
+    "province": "广东",
+    "assetType": "高速公路",
+    "operator": "上市公司及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 45,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [113.81, 22.639],
+        [114.012, 22.62],
+        [114.205, 22.628],
+        [114.27, 22.668]
+      ]
+    },
+    "relatedAssetIds": ["shenzhen-meiguan"]
+  },
+  {
+    "id": "shenzhen-meiguan",
+    "ownerCompanyId": "shenzhen-expressway",
+    "name": "梅观高速",
+    "corridor": "深圳中轴北向通道",
+    "province": "广东",
+    "assetType": "高速公路",
+    "operator": "—",
+    "openedAt": "—",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 19,
+    "annualRevenue": "—",
+    "traffic": "—",
+    "freightShare": "—",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.059, 22.543],
+        [114.055, 22.61],
+        [114.046, 22.69],
+        [114.03, 22.748]
+      ]
+    },
+    "relatedAssetIds": ["shenzhen-jihe"]
+  },
+  {
+    "id": "chutian-hanyi-hanjing",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "汉宜高速汉荆段",
+    "routeCode": "G50 沪渝高速",
+    "corridor": "武汉至荆州通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "武汉 / 荆州",
+    "ownership": "100%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2031年2月",
+    "remainingTerm": "约4年7个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 179.204,
+    "annualRevenue": "2025年汉宜高速合并披露：13.26亿元",
+    "operatingCost": "2025年汉宜高速合并披露：4.60亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "汉宜高速合并披露（汉荆段、江宜段）",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.305, 30.593],
+        [113.8, 30.42],
+        [113.45, 30.36],
+        [112.24, 30.34]
+      ]
+    },
+    "relatedAssetIds": ["chutian-hanyi-jiangyi", "chutian-huangxian-xianning"]
+  },
+  {
+    "id": "chutian-hanyi-jiangyi",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "汉宜高速江宜段",
+    "routeCode": "G50 沪渝高速",
+    "corridor": "荆州至宜昌通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "荆州 / 宜昌",
+    "ownership": "100%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2027年1月",
+    "remainingTerm": "约6个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 84.457,
+    "annualRevenue": "2025年汉宜高速合并披露：13.26亿元",
+    "operatingCost": "2025年汉宜高速合并披露：4.60亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "汉宜高速合并披露（汉荆段、江宜段）",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [112.24, 30.34],
+        [111.9, 30.41],
+        [111.65, 30.52],
+        [111.29, 30.7]
+      ]
+    },
+    "relatedAssetIds": ["chutian-hanyi-hanjing"]
+  },
+  {
+    "id": "chutian-dasui",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "大随高速",
+    "routeCode": "G4213 麻安高速",
+    "corridor": "大悟至随州通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "大悟 / 随州",
+    "ownership": "100%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2041年9月",
+    "remainingTerm": "约15年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 84.389,
+    "annualRevenue": "2025年：0.86亿元",
+    "operatingCost": "2025年：1.43亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "单路披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.13, 31.56],
+        [113.88, 31.62],
+        [113.62, 31.68],
+        [113.37, 31.72]
+      ]
+    },
+    "relatedAssetIds": ["chutian-daguangbei"]
+  },
+  {
+    "id": "chutian-huangxian-xianning",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "黄咸高速咸宁段",
+    "routeCode": "S78 蕲嘉高速",
+    "corridor": "咸宁至黄石横向通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "咸宁",
+    "ownership": "100%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2044年3月",
+    "remainingTerm": "约17年8个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 22.823,
+    "annualRevenue": "2025年黄咸高速合并披露：2.17亿元",
+    "operatingCost": "2025年黄咸高速合并披露：1.33亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "黄咸高速合并披露（咸宁段、黄石段）",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.31, 29.85],
+        [114.47, 29.88],
+        [114.62, 29.93]
+      ]
+    },
+    "relatedAssetIds": ["chutian-huangxian-huangshi", "chutian-hanyi-hanjing"]
+  },
+  {
+    "id": "chutian-huangxian-huangshi",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "黄咸高速黄石段",
+    "routeCode": "S78 蕲嘉高速",
+    "corridor": "黄石至咸宁横向通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "黄石",
+    "ownership": "90%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2044年3月",
+    "remainingTerm": "约17年8个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 33.146,
+    "annualRevenue": "2025年黄咸高速合并披露：2.17亿元",
+    "operatingCost": "2025年黄咸高速合并披露：1.33亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "黄咸高速合并披露（咸宁段、黄石段）",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.62, 29.93],
+        [114.85, 30.05],
+        [115.04, 30.2]
+      ]
+    },
+    "relatedAssetIds": ["chutian-huangxian-xianning", "chutian-daguangbei"]
+  },
+  {
+    "id": "chutian-daguangbei",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "大广北高速",
+    "routeCode": "G45 大广高速",
+    "corridor": "麻城至浠水通道",
+    "province": "湖北",
+    "assetType": "高速公路",
+    "endpoints": "麻城 / 浠水",
+    "ownership": "75%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2039年6月",
+    "remainingTerm": "约12年11个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 147.115,
+    "annualRevenue": "2025年：5.10亿元",
+    "operatingCost": "2025年：4.22亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "单路披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [115.01, 31.17],
+        [115.08, 30.92],
+        [115.16, 30.68],
+        [115.2, 30.45]
+      ]
+    },
+    "relatedAssetIds": ["chutian-xinxian", "chutian-huangxian-huangshi"]
+  },
+  {
+    "id": "chutian-xinxian",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "新县高速",
+    "routeCode": "G45 大广高速",
+    "corridor": "河南新县段",
+    "province": "河南",
+    "assetType": "高速公路",
+    "endpoints": "新县",
+    "ownership": "100%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2040年3月",
+    "remainingTerm": "约13年8个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 35.223,
+    "annualRevenue": "2025年：1.63亿元",
+    "operatingCost": "2025年：1.15亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "单路披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.9, 31.72],
+        [114.88, 31.55],
+        [114.87, 31.37]
+      ]
+    },
+    "relatedAssetIds": ["chutian-guangshan", "chutian-daguangbei"]
+  },
+  {
+    "id": "chutian-guangshan",
+    "ownerCompanyId": "chutian-expressway",
+    "name": "光山高速",
+    "routeCode": "G45 大广高速",
+    "corridor": "河南光山段",
+    "province": "河南",
+    "assetType": "高速公路",
+    "endpoints": "光山",
+    "ownership": "55%",
+    "operator": "楚天高速及附属运营主体",
+    "openedAt": "—",
+    "tollTerm": "截至2040年3月",
+    "remainingTerm": "约13年8个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 32.804,
+    "annualRevenue": "2025年：0.79亿元",
+    "operatingCost": "2025年：0.74亿元",
+    "traffic": "—",
+    "freightShare": "—",
+    "disclosureScope": "单路披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [114.9, 32.02],
+        [114.9, 31.88],
+        [114.9, 31.72]
+      ]
+    },
+    "relatedAssetIds": ["chutian-xinxian"]
+  }
+]

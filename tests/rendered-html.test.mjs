@@ -33,6 +33,18 @@ test("exports a stock asset list without the map workspace", async () => {
   assert.doesNotMatch(html, /id="asset-map"/);
 });
 
+test("exports Chutian Expressway assets from the public ledger", async () => {
+  const html = await readExportedHtml("stocks/600035.SH/index.html");
+  assert.match(html, /湖北楚天智能交通股份有限公司/);
+  assert.match(html, /汉宜高速汉荆段/);
+  assert.match(html, /截至2031年2月/);
+  assert.match(html, /2025年汉宜高速合并披露：13.26亿元/);
+  assert.match(html, /黄咸高速合并披露/);
+  assert.doesNotMatch(html, /data\/research-ledger|Route geometry is/);
+  assert.doesNotMatch(html, /待核验|样例|数据来源状态|需要穿透/);
+  assert.doesNotMatch(html, /id="asset-map"/);
+});
+
 test("starter preview is removed from the finished site", async () => {
   const [page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),

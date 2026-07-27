@@ -129,6 +129,16 @@ a {
   top: 80%;
 }
 
+.map-label.hubei {
+  left: 37%;
+  top: 56%;
+}
+
+.map-label.henan {
+  left: 36%;
+  top: 40%;
+}
+
 #asset-map {
   position: absolute;
   inset: 0;
@@ -273,35 +283,8 @@ a {
   color: var(--accent-strong);
 }
 
-.status-pill {
-  display: inline-flex;
-  min-height: 24px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 5px;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.status-pill.sample {
-  background: rgba(160, 71, 58, 0.12);
-  color: var(--danger);
-}
-
-.status-pill.source {
-  background: rgba(154, 107, 31, 0.13);
-  color: var(--warn);
-}
-
-.status-pill.verified {
-  background: rgba(31, 122, 106, 0.13);
-  color: var(--accent-strong);
-}
-
 .detail-title {
-  margin: 12px 0 0;
+  margin: 0;
   font-size: 24px;
   line-height: 1.18;
   letter-spacing: 0;
@@ -358,8 +341,7 @@ a {
 }
 
 .company-box,
-.relation-item,
-.source-note {
+.relation-item {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
@@ -417,14 +399,6 @@ a {
 
 .relation-item:not(.readonly):hover {
   border-color: var(--accent);
-}
-
-.source-note {
-  border-style: dashed;
-  background: rgba(154, 107, 31, 0.07);
-  color: #6d4d18;
-  font-size: 12px;
-  line-height: 1.6;
 }
 
 .empty-state {

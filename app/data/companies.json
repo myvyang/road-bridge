@@ -1,0 +1,42 @@
+[
+  {
+    "id": "jiangsu-expressway",
+    "name": "江苏宁沪高速公路股份有限公司",
+    "shortName": "宁沪高速",
+    "symbols": ["600377.SH", "00177.HK"],
+    "market": "A+H",
+    "note": "长三角核心收费公路资产平台。"
+  },
+  {
+    "id": "zhejiang-expressway",
+    "name": "浙江沪杭甬高速公路股份有限公司",
+    "shortName": "浙江沪杭甬",
+    "symbols": ["00576.HK"],
+    "market": "H",
+    "note": "浙江省内高速公路和相关交通资产平台。"
+  },
+  {
+    "id": "anhui-expressway",
+    "name": "安徽皖通高速公路股份有限公司",
+    "shortName": "皖通高速",
+    "symbols": ["600012.SH", "00995.HK"],
+    "market": "A+H",
+    "note": "安徽省高速公路收费权资产平台。"
+  },
+  {
+    "id": "shenzhen-expressway",
+    "name": "深圳高速公路集团股份有限公司",
+    "shortName": "深圳高速",
+    "symbols": ["600548.SH", "00548.HK"],
+    "market": "A+H",
+    "note": "深圳及珠三角收费公路、环保和基建资产平台。"
+  },
+  {
+    "id": "chutian-expressway",
+    "name": "湖北楚天智能交通股份有限公司",
+    "shortName": "楚天高速",
+    "symbols": ["600035.SH"],
+    "market": "A",
+    "note": "湖北省内高速公路特许经营权平台，路桥运营是主要利润中心。"
+  }
+]

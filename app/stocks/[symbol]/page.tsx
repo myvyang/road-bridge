@@ -62,9 +62,11 @@ export default async function StockAssetPage({
       <section className="stock-assets" aria-label="路产清单">
         {assets.map((asset) => {
           const ledgerItems = [
+            ["路线编号", asset.routeCode],
+            ["拥有权益", asset.ownership],
             ["收费期限", asset.tollTerm],
-            ["建设 / 收购成本", asset.buildOrAcquisitionCost],
             ["年度收入", asset.annualRevenue],
+            ["披露口径", asset.disclosureScope],
           ].filter(([, value]) => isPublicAssetValue(value));
 
           return (
@@ -79,6 +81,9 @@ export default async function StockAssetPage({
                   <span className="tag">{asset.province}</span>
                   <span className="tag">{asset.assetType}</span>
                   <span className="tag">{asset.lengthKm} km</span>
+                  {isPublicAssetValue(asset.endpoints) ? (
+                    <span className="tag">{asset.endpoints}</span>
+                  ) : null}
                 </div>
               </div>
               {ledgerItems.length ? (

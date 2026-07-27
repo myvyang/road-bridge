@@ -35,6 +35,9 @@
 - `geometry`：地图线路坐标，当前统一为 GCJ-02，点格式 `[经度, 纬度]`。
 - `province`、`corridor`：区域和交通走廊。
 - `owner_company_id`：归属上市公司或控股主体。
+- `route_code`：路线编号，如 G50 沪渝高速。
+- `endpoints`：年报披露的起点 / 终点。
+- `ownership`：上市公司拥有权益比例。
 - `operator`：运营主体。
 - `opened_at`：开通日期。
 - `toll_start`、`toll_end`：收费起止日。
@@ -75,3 +78,10 @@
 - 内部采集台账必须区分原型、待核验和已核验，不能把未核验字段当研究结论。
 - 中国大陆路产几何入库前必须明确坐标系；WGS84、GCJ-02、BD-09 不能混用。
 - 所有时间字段写入时带日期或明确报告期；项目状态记录使用 `Asia/Shanghai`。
+
+## 当前文件分层
+
+- `app/data/companies.json`：公开展示用上市公司静态信息。
+- `app/data/assets.json`：公开展示用路产事实。
+- `app/data/roadAssets.ts`：字段类型、聚合导出和查询函数。
+- `data/research-ledger.json`：内部来源台账，记录来源、字段状态和采集备注，不导入公开页面。

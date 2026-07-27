@@ -153,6 +153,8 @@ function matchesAsset(asset: RoadAsset, query: string) {
 
   return [
     asset.name,
+    asset.routeCode ?? "",
+    asset.endpoints ?? "",
     asset.corridor,
     asset.province,
     asset.assetType,
@@ -296,6 +298,8 @@ export function RoadAssetExplorer() {
           <span className="map-label zhejiang">浙江</span>
           <span className="map-label anhui">安徽</span>
           <span className="map-label guangdong">广东</span>
+          <span className="map-label hubei">湖北</span>
+          <span className="map-label henan">河南</span>
         </div>
         <svg className="fallback-routes" viewBox="0 0 1000 1000" aria-label="路产线路兜底图">
           {displayedAssets.map((asset) => {
@@ -442,8 +446,11 @@ function AssetDetail({ asset }: { asset: RoadAsset }) {
         </h3>
         <div className="fact-grid">
           <Fact label="资产类型" value={asset.assetType} />
+          <Fact label="路线编号" value={asset.routeCode} />
           <Fact label="省份" value={asset.province} />
+          <Fact label="起点 / 终点" value={asset.endpoints} />
           <Fact label="收费里程" value={`${asset.lengthKm} km`} />
+          <Fact label="拥有权益" value={asset.ownership} />
           <Fact label="开通时间" value={asset.openedAt} />
           <Fact label="收费期限" value={asset.tollTerm} />
           <Fact label="剩余年限" value={asset.remainingTerm} />
@@ -458,9 +465,11 @@ function AssetDetail({ asset }: { asset: RoadAsset }) {
         </h3>
         <div className="fact-grid">
           <Fact label="年度收入" value={asset.annualRevenue} />
+          <Fact label="年度成本" value={asset.operatingCost} />
           <Fact label="通行量" value={asset.traffic} />
           <Fact label="货车占比" value={asset.freightShare} />
           <Fact label="运营主体" value={asset.operator} />
+          <Fact label="披露口径" value={asset.disclosureScope} wide />
         </div>
       </section>
 
@@ -520,7 +529,7 @@ function Fact({
   wide = false,
 }: {
   label: string;
-  value: string;
+  value?: string;
   wide?: boolean;
 }) {
   if (!isPublicAssetValue(value)) {

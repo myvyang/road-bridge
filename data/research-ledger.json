@@ -1,0 +1,33 @@
+[
+  {
+    "companyId": "chutian-expressway",
+    "sourceTitle": "楚天高速：2025年年度报告",
+    "sourceDate": "2026-04-23",
+    "sourceUrl": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12152477&stockid=600035",
+    "assetIds": [
+      "chutian-hanyi-hanjing",
+      "chutian-hanyi-jiangyi",
+      "chutian-dasui",
+      "chutian-huangxian-xianning",
+      "chutian-huangxian-huangshi",
+      "chutian-daguangbei",
+      "chutian-xinxian",
+      "chutian-guangshan"
+    ],
+    "fields": [
+      "asset name",
+      "route code",
+      "ownership",
+      "endpoints",
+      "toll length",
+      "operation term",
+      "2025 revenue",
+      "2025 operating cost"
+    ],
+    "notes": [
+      "Revenue table discloses Han-Yi Expressway as one line, while the operation term table splits Han-Jing and Jiang-Yi segments.",
+      "Revenue table discloses Huang-Xian Expressway as one line, while the operation term table splits Xianning and Huangshi segments.",
+      "Route geometry is a manually maintained corridor line based on public place endpoints, not licensed road-vector geometry."
+    ]
+  }
+]

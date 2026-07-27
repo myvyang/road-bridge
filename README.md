@@ -13,6 +13,7 @@
 - 路产详情中的股票代码可进入股票资产清单页。
 - 股票资产清单页不带地图，只展示该股票下面的路产资产；点击路产可回到地图并选中对应线路。
 - 公开页面只展示路产事实；未确认字段留空，核验状态和研究备注不放到网页上。
+- 楚天高速已按 2025 年报建立第一批完整路产样板，含权益比例、收费里程、收费期限、年度收入和披露口径。
 
 ## 数据原则
 
@@ -85,7 +86,10 @@ GITHUB_PAGES=true GITHUB_PAGES_BASE_PATH=/road-bridge npm run build:pages
 
 - `app/components/RoadAssetExplorer.tsx`：地图页和右侧路产详情。
 - `app/stocks/[symbol]/page.tsx`：股票资产清单页。
-- `app/data/roadAssets.ts`：公开展示用上市公司清单、路产数据和字段模型。
+- `app/data/companies.json`：公开展示用上市公司清单。
+- `app/data/assets.json`：公开展示用路产资产数据。
+- `app/data/roadAssets.ts`：字段类型、数据聚合和查询函数。
+- `data/research-ledger.json`：内部研究台账，记录来源、字段状态和采集备注，不导入公开页面。
 - `docs/data-model.md`：后续真实数据入库模型。
 - `.github/workflows/pages.yml`：GitHub Pages 静态站发布流程。
 - `project-memory/`：长期开发判断和当前状态。
