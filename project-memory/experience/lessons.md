@@ -8,3 +8,4 @@
 - 年报常把多条路合并披露。没有官方拆分时，应明确“合并披露”，不要为了地图或表格完整强行分摊。
 - 地图展示会天然给人“事实已确认”的感觉；样例、待核验和已核验状态必须在界面上显式区分。
 - 发布目标是 GitHub Pages 时，项目必须保持可静态导出；不要引入依赖运行时服务端的页面能力。
+- GitHub Actions 运行在公网环境，`package-lock.json` 不能保留内网 npm registry URL；项目应通过 `.npmrc` 固定使用 `https://registry.npmjs.org/`。
