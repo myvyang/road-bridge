@@ -258,7 +258,8 @@ export function RoadAssetExplorer() {
 
   useEffect(() => {
     const map = mapRef.current;
-    if (mapProvider !== "amap" || !map || !window.AMap) {
+    const AMap = window.AMap;
+    if (mapProvider !== "amap" || !map || !AMap) {
       return;
     }
 
@@ -269,7 +270,7 @@ export function RoadAssetExplorer() {
 
     const overlays = displayedAssets.map((asset) => {
       const active = selectedAsset?.id === asset.id;
-      const polyline = new window.AMap.Polyline({
+      const polyline = new AMap.Polyline({
         path: pathOf(asset),
         strokeColor: active ? "#d64a3a" : "#287a70",
         strokeOpacity: active ? 0.98 : 0.74,

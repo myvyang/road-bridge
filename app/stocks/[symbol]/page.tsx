@@ -3,8 +3,15 @@ import { ArrowLeft, ExternalLink, Route } from "lucide-react";
 import {
   getAssetsByCompany,
   getCompanyBySymbol,
+  listedRoadCompanies,
   sourceLabels,
 } from "../../data/roadAssets";
+
+export function generateStaticParams() {
+  return listedRoadCompanies.flatMap((company) =>
+    company.symbols.map((symbol) => ({ symbol })),
+  );
+}
 
 export default async function StockAssetPage({
   params,

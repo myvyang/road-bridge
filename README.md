@@ -56,10 +56,36 @@ npm run build
 npm test
 ```
 
+## GitHub Pages 发布
+
+本项目发布到 GitHub Pages，仓库为 `myvyang/road-bridge` 时，线上路径是：
+
+```text
+https://myvyang.github.io/road-bridge/
+```
+
+发布方式：
+
+1. GitHub 仓库 `Settings -> Pages -> Build and deployment -> Source` 选择 `GitHub Actions`。
+2. 推送到 `main` 后，`.github/workflows/pages.yml` 会执行静态导出并部署 `out/`。
+3. 如果需要真实高德底图，在仓库 `Settings -> Secrets and variables -> Actions` 中配置：
+
+```text
+NEXT_PUBLIC_AMAP_KEY
+NEXT_PUBLIC_AMAP_SECURITY_CODE
+```
+
+本地验证 Pages 静态导出：
+
+```bash
+GITHUB_PAGES=true GITHUB_PAGES_BASE_PATH=/road-bridge npm run build:pages
+```
+
 ## 项目结构
 
 - `app/components/RoadAssetExplorer.tsx`：地图页和右侧路产详情。
 - `app/stocks/[symbol]/page.tsx`：股票资产清单页。
 - `app/data/roadAssets.ts`：上市公司清单、路产样例数据和字段模型。
 - `docs/data-model.md`：后续真实数据入库模型。
+- `.github/workflows/pages.yml`：GitHub Pages 静态站发布流程。
 - `project-memory/`：长期开发判断和当前状态。
