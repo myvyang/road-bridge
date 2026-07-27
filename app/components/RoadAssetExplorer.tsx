@@ -1,19 +1,24 @@
 "use client";
 
 import type { LatLngExpression, LayerGroup, Map as LeafletMap } from "leaflet";
+import Link from "next/link";
 import {
   Building2,
   CalendarClock,
   Database,
+  ExternalLink,
   GitBranch,
   Layers,
+  MapPinned,
   Route,
   Search,
   ShieldAlert,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  findRelatedAssets,
+  getCompany,
+  getRelatedAssets,
+  listedRoadCompanies,
   roadAssets,
   sourceLabels,
   type DataQuality,
@@ -21,7 +26,6 @@ import {
 } from "../data/roadAssets";
 
 type LeafletModule = typeof import("leaflet");
-type FilterMode = "all" | "source";
 
 const qualityClass: Record<DataQuality, string> = {
   sample: "sample",
@@ -29,56 +33,72 @@ const qualityClass: Record<DataQuality, string> = {
   verified: "verified",
 };
 
-function qualityText(asset: RoadAsset) {
-  return sourceLabels[asset.sourceStatus];
+function pathOf(asset: RoadAsset): LatLngExpression[] {
+  return asset.coordinates.map(([lat, lng]) => [lat, lng]);
 }
 
-function matchesQuery(asset: RoadAsset, query: string) {
+function matchesAsset(asset: RoadAsset, query: string) {
+  const company = getCompany(asset.ownerCompanyId);
   const normalized = query.trim().toLowerCase();
   if (!normalized) {
     return true;
   }
+
   return [
     asset.name,
     asset.corridor,
     asset.province,
-    asset.ownerCompany,
-    asset.operator,
-    ...asset.listedSymbols,
+    asset.assetType,
+    company?.name ?? "",
+    company?.shortName ?? "",
+    ...(company?.symbols ?? []),
   ]
     .join(" ")
     .toLowerCase()
     .includes(normalized);
 }
 
-function pathOf(asset: RoadAsset): LatLngExpression[] {
-  return asset.coordinates.map(([lat, lng]) => [lat, lng]);
-}
-
 export function RoadAssetExplorer() {
   const [query, setQuery] = useState("");
-  const [filterMode, setFilterMode] = useState<FilterMode>("all");
-  const [selectedId, setSelectedId] = useState(roadAssets[0]?.id ?? "");
+  const [companyId, setCompanyId] = useState("all");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [mapReady, setMapReady] = useState(false);
   const mapRef = useRef<LeafletMap | null>(null);
   const layersRef = useRef<LayerGroup | null>(null);
   const leafletRef = useRef<LeafletModule | null>(null);
 
-  const filteredAssets = useMemo(() => {
+  const visibleAssets = useMemo(() => {
     return roadAssets.filter((asset) => {
-      const passesQuery = matchesQuery(asset, query);
-      const passesSource =
-        filterMode === "all" || asset.sourceStatus !== "verified";
-      return passesQuery && passesSource;
+      const matchesCompany =
+        companyId === "all" || asset.ownerCompanyId === companyId;
+      return matchesCompany && matchesAsset(asset, query);
     });
-  }, [filterMode, query]);
+  }, [companyId, query]);
 
-  const selectedAsset =
-    roadAssets.find((asset) => asset.id === selectedId) ?? filteredAssets[0];
-  const relatedAssets = selectedAsset ? findRelatedAssets(selectedAsset) : [];
-  const listedCompanies = new Set(roadAssets.flatMap((asset) => asset.listedSymbols));
-  const pendingSources = roadAssets.filter(
-    (asset) => asset.sourceStatus !== "verified",
-  ).length;
+  const selectedAsset = selectedId ? roadAssets.find((asset) => asset.id === selectedId) : null;
+
+  const selectAsset = useCallback((assetId: string | null) => {
+    setSelectedId(assetId);
+    const url = new URL(window.location.href);
+    if (assetId) {
+      url.searchParams.set("asset", assetId);
+    } else {
+      url.searchParams.delete("asset");
+    }
+    window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const assetId = params.get("asset");
+    const asset = assetId ? roadAssets.find((candidate) => candidate.id === assetId) : null;
+    if (asset) {
+      queueMicrotask(() => {
+        setSelectedId(asset.id);
+        setCompanyId(getCompany(asset.ownerCompanyId)?.id ?? "all");
+      });
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,7 +111,7 @@ export function RoadAssetExplorer() {
       leafletRef.current = L;
       const map = L.map("asset-map", {
         center: [30.9, 119.3],
-        zoom: 7,
+        zoom: 6,
         zoomControl: false,
       });
 
@@ -103,6 +123,11 @@ export function RoadAssetExplorer() {
 
       layersRef.current = L.layerGroup().addTo(map);
       mapRef.current = map;
+      setMapReady(true);
+
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+      });
     });
 
     return () => {
@@ -118,23 +143,27 @@ export function RoadAssetExplorer() {
     const L = leafletRef.current;
     const map = mapRef.current;
     const layers = layersRef.current;
-    if (!L || !map || !layers) {
+    if (!mapReady || !L || !map || !layers) {
       return;
     }
 
     layers.clearLayers();
-    const visible = filteredAssets.length ? filteredAssets : roadAssets;
+    const assetsToDraw = visibleAssets.length ? visibleAssets : roadAssets;
     const bounds = L.latLngBounds([]);
 
-    visible.forEach((asset) => {
+    assetsToDraw.forEach((asset) => {
       const active = selectedAsset?.id === asset.id;
+      const company = getCompany(asset.ownerCompanyId);
       const polyline = L.polyline(pathOf(asset), {
-        color: active ? "#e0523f" : "#547f75",
-        opacity: active ? 0.95 : 0.7,
-        weight: active ? 7 : 4,
+        color: active ? "#d64a3a" : "#287a70",
+        opacity: active ? 0.98 : 0.74,
+        weight: active ? 8 : 5,
+        lineCap: "round",
+        lineJoin: "round",
       });
-      polyline.on("click", () => setSelectedId(asset.id));
-      polyline.bindTooltip(asset.name, {
+
+      polyline.on("click", () => selectAsset(asset.id));
+      polyline.bindTooltip(`${asset.name}${company ? ` / ${company.shortName}` : ""}`, {
         direction: "top",
         sticky: true,
       });
@@ -142,239 +171,232 @@ export function RoadAssetExplorer() {
       pathOf(asset).forEach((point) => bounds.extend(point));
     });
 
+    if (selectedAsset) {
+      const selectedBounds = L.latLngBounds(pathOf(selectedAsset));
+      map.fitBounds(selectedBounds.pad(0.55), { animate: true, maxZoom: 9 });
+      return;
+    }
+
     if (bounds.isValid()) {
       map.fitBounds(bounds.pad(0.18), { animate: true });
     }
-  }, [filteredAssets, selectedAsset?.id]);
-
-  useEffect(() => {
-    const L = leafletRef.current;
-    const map = mapRef.current;
-    if (!L || !map || !selectedAsset) {
-      return;
-    }
-    const bounds = L.latLngBounds(pathOf(selectedAsset));
-    if (bounds.isValid()) {
-      map.flyToBounds(bounds.pad(0.45), { duration: 0.7, maxZoom: 9 });
-    }
-  }, [selectedAsset]);
+  }, [mapReady, selectAsset, selectedAsset, visibleAssets]);
 
   return (
-    <main className="asset-shell">
-      <aside className="asset-sidebar" aria-label="路产筛选和列表">
-        <div className="panel-inner">
-          <div className="brand-row">
-            <div>
-              <h1 className="brand-title">路桥资产地图</h1>
-              <p className="brand-subtitle">
-                用地图穿透高速公路、桥梁、上市公司归属和收费权资产关系。
-              </p>
-            </div>
+    <main className="map-shell">
+      <section className="map-stage" aria-label="路产地图">
+        <div id="asset-map" />
+        <div className="map-controls">
+          <div className="map-brand">
             <div className="icon-chip" aria-hidden="true">
-              <Route size={21} />
+              <MapPinned size={21} />
+            </div>
+            <div>
+              <h1>路桥资产地图</h1>
+              <p>先从上市公司梳理路产，再把单条路标到地图上。</p>
             </div>
           </div>
 
-          <label className="search-box">
-            <Search size={18} />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="搜索路段、公司、股票代码"
-              aria-label="搜索路段、公司、股票代码"
-            />
-          </label>
-
-          <div className="toolbar" aria-label="数据筛选">
-            <button
-              type="button"
-              aria-pressed={filterMode === "all"}
-              onClick={() => setFilterMode("all")}
-            >
-              全部资产
-            </button>
-            <button
-              type="button"
-              aria-pressed={filterMode === "source"}
-              onClick={() => setFilterMode("source")}
-            >
-              待核验
-            </button>
+          <div className="filter-row">
+            <label className="select-box">
+              <span>上市公司</span>
+              <select
+                value={companyId}
+                onChange={(event) => {
+                  setCompanyId(event.target.value);
+                  selectAsset(null);
+                }}
+              >
+                <option value="all">全部路桥公司</option>
+                {listedRoadCompanies.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.shortName}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="map-search">
+              <Search size={17} />
+              <input
+                value={query}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  selectAsset(null);
+                }}
+                placeholder="搜索路名、公司、股票代码"
+                aria-label="搜索路名、公司、股票代码"
+              />
+            </label>
           </div>
 
-          <div className="stats-grid" aria-label="资产统计">
-            <div className="stat">
-              <span className="stat-value">{roadAssets.length}</span>
-              <span className="stat-label">路产</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">{listedCompanies.size}</span>
-              <span className="stat-label">证券代码</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">{pendingSources}</span>
-              <span className="stat-label">待核验</span>
-            </div>
-          </div>
-
-          <div className="asset-list">
-            {filteredAssets.length ? (
-              filteredAssets.map((asset) => (
+          <div className="asset-strip" aria-label="当前筛选出的路产">
+            {visibleAssets.length ? (
+              visibleAssets.map((asset) => (
                 <button
-                  className="asset-card"
+                  className="asset-token"
                   key={asset.id}
                   type="button"
-                  aria-current={selectedAsset?.id === asset.id}
-                  onClick={() => setSelectedId(asset.id)}
+                  aria-pressed={selectedId === asset.id}
+                  onClick={() => selectAsset(asset.id)}
                 >
-                  <div className="asset-card-head">
-                    <div>
-                      <h2>{asset.name}</h2>
-                      <p>{asset.ownerCompany}</p>
-                    </div>
-                    <span className={`status-pill ${qualityClass[asset.sourceStatus]}`}>
-                      {qualityText(asset)}
-                    </span>
-                  </div>
-                  <div className="tag-row">
-                    <span className="tag">{asset.province}</span>
-                    <span className="tag">{asset.assetType}</span>
-                    <span className="tag">{asset.lengthKm} km</span>
-                  </div>
+                  <Route size={14} />
+                  <span>{asset.name}</span>
                 </button>
               ))
             ) : (
-              <div className="empty-state">没有匹配的路产。换一个公司、路段或股票代码试试。</div>
+              <span className="strip-empty">没有匹配路产</span>
             )}
-          </div>
-        </div>
-      </aside>
-
-      <section className="map-stage" aria-label="路桥地图">
-        <div id="asset-map" />
-        <div className="map-topbar">
-          <div className="map-caption">
-            <strong>{selectedAsset?.name ?? "选择一条路产"}</strong>
-            <span>
-              {selectedAsset
-                ? `${selectedAsset.corridor} / ${selectedAsset.ownerCompany}`
-                : "点击地图上的线路查看收费权资产信息。"}
-            </span>
-          </div>
-          <div className="map-legend" aria-label="图例">
-            <span className="legend-line" />
-            <span>当前选中路段</span>
           </div>
         </div>
       </section>
 
-      <aside className="asset-detail" aria-label="路产详情">
+      <aside className="asset-detail" aria-label="选中路产信息">
         {selectedAsset ? (
-          <AssetDetail asset={selectedAsset} relatedAssets={relatedAssets} />
+          <AssetDetail asset={selectedAsset} />
         ) : (
-          <div className="panel-inner">
-            <div className="empty-state">请选择一条路产。</div>
-          </div>
+          <EmptyDetail />
         )}
       </aside>
     </main>
   );
 }
 
-function AssetDetail({
-  asset,
-  relatedAssets,
-}: {
-  asset: RoadAsset;
-  relatedAssets: RoadAsset[];
-}) {
+function EmptyDetail() {
+  return (
+    <div className="panel-inner empty-detail">
+      <div className="empty-icon" aria-hidden="true">
+        <Route size={26} />
+      </div>
+      <h2>未选择路产</h2>
+      <p>点击地图上的线路，右侧只显示这条路本身的收费权、运营和归属信息。</p>
+    </div>
+  );
+}
+
+function AssetDetail({ asset }: { asset: RoadAsset }) {
+  const company = getCompany(asset.ownerCompanyId);
+  const relatedAssets = getRelatedAssets(asset);
+
   return (
     <div className="panel-inner">
       <div>
         <span className={`status-pill ${qualityClass[asset.sourceStatus]}`}>
           <ShieldAlert size={13} />
-          {qualityText(asset)}
+          {sourceLabels[asset.sourceStatus]}
         </span>
         <h2 className="detail-title">{asset.name}</h2>
         <p className="detail-summary">{asset.corridor}</p>
-        <div className="tag-row">
-          {asset.listedSymbols.map((symbol) => (
-            <span className="tag" key={symbol}>
-              {symbol}
-            </span>
-          ))}
-        </div>
       </div>
 
       <section className="detail-section">
         <h3 className="section-title">
-          <Building2 size={16} />
-          归属公司
-        </h3>
-        <div className="company-box">
-          <strong>{asset.ownerCompany}</strong>
-          <span>运营主体：{asset.operator}</span>
-        </div>
-      </section>
-
-      <section className="detail-section">
-        <h3 className="section-title">
           <CalendarClock size={16} />
-          收费权台账
+          路产收费权
         </h3>
         <div className="fact-grid">
+          <Fact label="资产类型" value={asset.assetType} />
+          <Fact label="省份" value={asset.province} />
+          <Fact label="收费里程" value={`${asset.lengthKm} km`} />
           <Fact label="开通时间" value={asset.openedAt} />
           <Fact label="收费期限" value={asset.tollTerm} />
           <Fact label="剩余年限" value={asset.remainingTerm} />
-          <Fact label="建设 / 收购成本" value={asset.buildOrAcquisitionCost} />
-          <Fact label="里程" value={`${asset.lengthKm} km`} />
-          <Fact label="年度收入" value={asset.annualRevenue} />
-          <Fact label="通行量" value={asset.traffic} />
-          <Fact label="货车占比" value={asset.freightShare} />
-        </div>
-      </section>
-
-      <section className="detail-section">
-        <h3 className="section-title">
-          <GitBranch size={16} />
-          相邻关系
-        </h3>
-        <div className="relation-list">
-          {relatedAssets.map((related) => (
-            <div className="relation-item" key={related.id}>
-              <strong>{related.name}</strong>
-              <span>
-                {related.province} / {related.ownerCompany}
-              </span>
-            </div>
-          ))}
+          <Fact label="建设 / 收购成本" value={asset.buildOrAcquisitionCost} wide />
         </div>
       </section>
 
       <section className="detail-section">
         <h3 className="section-title">
           <Layers size={16} />
-          需要穿透的问题
+          运营口径
+        </h3>
+        <div className="fact-grid">
+          <Fact label="年度收入" value={asset.annualRevenue} />
+          <Fact label="通行量" value={asset.traffic} />
+          <Fact label="货车占比" value={asset.freightShare} />
+          <Fact label="运营主体" value={asset.operator} />
+        </div>
+      </section>
+
+      <section className="detail-section">
+        <h3 className="section-title">
+          <Building2 size={16} />
+          归属股票
+        </h3>
+        {company ? (
+          <div className="company-box">
+            <strong>{company.name}</strong>
+            <span>{company.note}</span>
+            <div className="stock-links">
+              {company.symbols.map((symbol) => (
+                <Link key={symbol} href={`/stocks/${encodeURIComponent(symbol)}`}>
+                  {symbol}
+                  <ExternalLink size={13} />
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="empty-state">这条路还没有绑定上市公司。</div>
+        )}
+      </section>
+
+      <section className="detail-section">
+        <h3 className="section-title">
+          <GitBranch size={16} />
+          路产关系
         </h3>
         <div className="relation-list">
-          {asset.riskNotes.map((note) => (
-            <div className="relation-item" key={note}>
-              <strong>{note}</strong>
-            </div>
+          {relatedAssets.map((related) => (
+            <button
+              className="relation-item"
+              key={related.id}
+              type="button"
+              onClick={() => {
+                const url = new URL(window.location.href);
+                url.searchParams.set("asset", related.id);
+                window.location.href = `${url.pathname}${url.search}`;
+              }}
+            >
+              <strong>{related.name}</strong>
+              <span>{related.corridor}</span>
+            </button>
           ))}
         </div>
       </section>
 
-      <div className="source-note">
-        <Database size={14} /> 第一版内置的是结构样例。真实入库时，每条路产都应绑定年报页码、公告链接、收费权批复、开通日期、成本口径和运营指标来源。
-      </div>
+      <section className="detail-section">
+        <h3 className="section-title">
+          <Database size={16} />
+          数据来源状态
+        </h3>
+        <div className="source-note">{asset.sourceNote}</div>
+      </section>
+
+      <section className="detail-section">
+        <h3 className="section-title">需要穿透</h3>
+        <div className="relation-list">
+          {asset.watchItems.map((item) => (
+            <div className="relation-item readonly" key={item}>
+              <strong>{item}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
 
-function Fact({ label, value }: { label: string; value: string }) {
+function Fact({
+  label,
+  value,
+  wide = false,
+}: {
+  label: string;
+  value: string;
+  wide?: boolean;
+}) {
   return (
-    <div className="fact">
+    <div className={wide ? "fact wide" : "fact"}>
       <span>{label}</span>
       <strong>{value}</strong>
     </div>
