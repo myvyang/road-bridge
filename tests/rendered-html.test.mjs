@@ -37,6 +37,7 @@ test("server-renders the road asset map shell", async () => {
   assert.match(html, /搜索路名、公司、股票代码/);
   assert.match(html, /未选择路产/);
   assert.match(html, /右侧只显示这条路本身的收费权、运营和归属信息/);
+  assert.match(html, /fallback-routes/);
   assert.doesNotMatch(html, /map-controls|map-brand|asset-strip/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/);
 });
@@ -65,6 +66,7 @@ test("starter preview is removed from the finished site", async () => {
   assert.doesNotMatch(page, /_sites-preview|SkeletonPreview|codex-preview/);
   assert.doesNotMatch(layout, /Starter Project|codex-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+  assert.doesNotMatch(packageJson, /leaflet/);
 
   await assert.rejects(readFile(new URL("../app/_sites-preview/SkeletonPreview.tsx", templateRoot)));
 });

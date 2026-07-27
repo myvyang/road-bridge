@@ -9,6 +9,13 @@ export type ListedRoadCompany = {
   note: string;
 };
 
+export type CoordinateSystem = "gcj02";
+
+export type RoadGeometry = {
+  coordinateSystem: CoordinateSystem;
+  path: [number, number][];
+};
+
 export type RoadAsset = {
   id: string;
   ownerCompanyId: string;
@@ -25,7 +32,7 @@ export type RoadAsset = {
   annualRevenue: string;
   traffic: string;
   freightShare: string;
-  coordinates: [number, number][];
+  geometry: RoadGeometry;
   relatedAssetIds: string[];
   sourceStatus: DataQuality;
   sourceNote: string;
@@ -90,12 +97,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待按单路披露口径入库",
     traffic: "待补日均车流、客货结构",
     freightShare: "待补货车占比",
-    coordinates: [
-      [31.586, 120.309],
-      [31.651, 119.974],
-      [31.78, 119.444],
-      [31.988, 118.796],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [120.309, 31.586],
+        [119.974, 31.651],
+        [119.444, 31.78],
+        [118.796, 31.988],
+      ],
+    },
     relatedAssetIds: ["jiangsu-ningchang", "anhui-hening", "zhejiang-huhangyong"],
     sourceStatus: "sample",
     sourceNote: "线路用于验证页面结构，收费权字段未做公告级核验。",
@@ -117,12 +127,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [31.902, 118.886],
-      [31.812, 119.192],
-      [31.742, 119.558],
-      [31.704, 119.946],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [118.886, 31.902],
+        [119.192, 31.812],
+        [119.558, 31.742],
+        [119.946, 31.704],
+      ],
+    },
     relatedAssetIds: ["jiangsu-huning"],
     sourceStatus: "needs_source",
     sourceNote: "需要先确认上市公司披露中的资产名称、范围和权益比例。",
@@ -144,12 +157,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [30.274, 120.155],
-      [30.438, 120.758],
-      [30.747, 120.75],
-      [31.231, 121.474],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [120.155, 30.274],
+        [120.758, 30.438],
+        [120.75, 30.747],
+        [121.474, 31.231],
+      ],
+    },
     relatedAssetIds: ["jiangsu-huning", "zhejiang-shangsan"],
     sourceStatus: "sample",
     sourceNote: "线路用于验证跨公司、跨省通道关系，运营数据待核验。",
@@ -171,12 +187,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [30.035, 120.871],
-      [29.726, 120.911],
-      [29.501, 121.006],
-      [29.152, 121.031],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [120.871, 30.035],
+        [120.911, 29.726],
+        [121.006, 29.501],
+        [121.031, 29.152],
+      ],
+    },
     relatedAssetIds: ["zhejiang-huhangyong"],
     sourceStatus: "needs_source",
     sourceNote: "需要从公司披露中确认收费里程、权益比例和收入披露粒度。",
@@ -198,12 +217,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [31.82, 117.227],
-      [31.736, 117.714],
-      [31.69, 118.318],
-      [31.988, 118.796],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [117.227, 31.82],
+        [117.714, 31.736],
+        [118.318, 31.69],
+        [118.796, 31.988],
+      ],
+    },
     relatedAssetIds: ["jiangsu-huning"],
     sourceStatus: "sample",
     sourceNote: "作为安徽至长三角走廊样例，收费权字段待核验。",
@@ -225,12 +247,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [22.639, 113.81],
-      [22.62, 114.012],
-      [22.628, 114.205],
-      [22.668, 114.27],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [113.81, 22.639],
+        [114.012, 22.62],
+        [114.205, 22.628],
+        [114.27, 22.668],
+      ],
+    },
     relatedAssetIds: ["shenzhen-meiguan"],
     sourceStatus: "needs_source",
     sourceNote: "需要穿透上市公司、附属公司和政府安排中的资产边界。",
@@ -252,12 +277,15 @@ export const roadAssets: RoadAsset[] = [
     annualRevenue: "待核验",
     traffic: "待核验",
     freightShare: "待核验",
-    coordinates: [
-      [22.543, 114.059],
-      [22.61, 114.055],
-      [22.69, 114.046],
-      [22.748, 114.03],
-    ],
+    geometry: {
+      coordinateSystem: "gcj02",
+      path: [
+        [114.059, 22.543],
+        [114.055, 22.61],
+        [114.046, 22.69],
+        [114.03, 22.748],
+      ],
+    },
     relatedAssetIds: ["shenzhen-jihe"],
     sourceStatus: "needs_source",
     sourceNote: "收费安排和政府补偿口径复杂，不能只按公司层面利润判断。",

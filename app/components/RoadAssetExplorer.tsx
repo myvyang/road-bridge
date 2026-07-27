@@ -1,6 +1,5 @@
 "use client";
 
-import type { LatLngExpression, LayerGroup, Map as LeafletMap } from "leaflet";
 import Link from "next/link";
 import {
   Building2,
@@ -24,16 +23,134 @@ import {
   type RoadAsset,
 } from "../data/roadAssets";
 
-type LeafletModule = typeof import("leaflet");
-
 const qualityClass: Record<DataQuality, string> = {
   sample: "sample",
   needs_source: "source",
   verified: "verified",
 };
 
-function pathOf(asset: RoadAsset): LatLngExpression[] {
-  return asset.coordinates.map(([lat, lng]) => [lat, lng]);
+type AMapPolyline = {
+  on: (eventName: "click", handler: () => void) => void;
+};
+
+type AMapMap = {
+  add: (overlays: AMapPolyline[]) => void;
+  remove: (overlays: AMapPolyline[]) => void;
+  setFitView: (
+    overlays?: AMapPolyline[],
+    immediately?: boolean,
+    avoid?: [number, number, number, number],
+    maxZoom?: number,
+  ) => void;
+  destroy: () => void;
+};
+
+type AMapNamespace = {
+  Map: new (
+    container: string | HTMLElement,
+    options: {
+      center: [number, number];
+      zoom: number;
+      resizeEnable?: boolean;
+      viewMode?: "2D" | "3D";
+    },
+  ) => AMapMap;
+  Polyline: new (options: {
+    path: [number, number][];
+    strokeColor: string;
+    strokeOpacity: number;
+    strokeWeight: number;
+    lineJoin: "round";
+    lineCap: "round";
+    zIndex: number;
+    extData: { assetId: string };
+  }) => AMapPolyline;
+};
+
+declare global {
+  interface Window {
+    AMap?: AMapNamespace;
+    _AMapSecurityConfig?: {
+      securityJsCode: string;
+    };
+  }
+}
+
+let amapLoadPromise: Promise<AMapNamespace> | null = null;
+
+function pathOf(asset: RoadAsset): [number, number][] {
+  return asset.geometry.path;
+}
+
+function loadAmap(key: string, securityCode?: string) {
+  if (window.AMap) {
+    return Promise.resolve(window.AMap);
+  }
+
+  if (!amapLoadPromise) {
+    amapLoadPromise = new Promise((resolve, reject) => {
+      if (securityCode) {
+        window._AMapSecurityConfig = { securityJsCode: securityCode };
+      }
+
+      const script = document.createElement("script");
+      script.id = "amap-js-api";
+      script.async = true;
+      script.src = `https://webapi.amap.com/maps?v=2.0&key=${encodeURIComponent(key)}`;
+      script.onload = () => {
+        if (window.AMap) {
+          resolve(window.AMap);
+          return;
+        }
+        reject(new Error("AMap JS API loaded without window.AMap"));
+      };
+      script.onerror = () => reject(new Error("Failed to load AMap JS API"));
+      document.head.appendChild(script);
+    });
+  }
+
+  return amapLoadPromise;
+}
+
+function assetsForMap(visibleAssets: RoadAsset[], selectedAsset: RoadAsset | null) {
+  const baseAssets = visibleAssets.length ? visibleAssets : roadAssets;
+  if (!selectedAsset || baseAssets.some((asset) => asset.id === selectedAsset.id)) {
+    return baseAssets;
+  }
+  return [selectedAsset, ...baseAssets];
+}
+
+function boundsFor(assets: RoadAsset[]) {
+  const points = assets.flatMap((asset) => pathOf(asset));
+  const lngs = points.map(([lng]) => lng);
+  const lats = points.map(([, lat]) => lat);
+
+  return {
+    minLng: Math.min(...lngs),
+    maxLng: Math.max(...lngs),
+    minLat: Math.min(...lats),
+    maxLat: Math.max(...lats),
+  };
+}
+
+function projectPoint(
+  [lng, lat]: [number, number],
+  bounds: ReturnType<typeof boundsFor>,
+) {
+  const lngRange = bounds.maxLng - bounds.minLng || 1;
+  const latRange = bounds.maxLat - bounds.minLat || 1;
+  const x = 70 + ((lng - bounds.minLng) / lngRange) * 860;
+  const y = 80 + (1 - (lat - bounds.minLat) / latRange) * 820;
+  return [x, y] as const;
+}
+
+function fallbackPath(asset: RoadAsset, bounds: ReturnType<typeof boundsFor>) {
+  return pathOf(asset)
+    .map((point, index) => {
+      const [x, y] = projectPoint(point, bounds);
+      return `${index === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
+    .join(" ");
 }
 
 function matchesAsset(asset: RoadAsset, query: string) {
@@ -61,10 +178,9 @@ export function RoadAssetExplorer() {
   const [query, setQuery] = useState("");
   const [companyId, setCompanyId] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [mapReady, setMapReady] = useState(false);
-  const mapRef = useRef<LeafletMap | null>(null);
-  const layersRef = useRef<LayerGroup | null>(null);
-  const leafletRef = useRef<LeafletModule | null>(null);
+  const [mapProvider, setMapProvider] = useState<"fallback" | "amap" | "failed">("fallback");
+  const mapRef = useRef<AMapMap | null>(null);
+  const overlaysRef = useRef<AMapPolyline[]>([]);
 
   const visibleAssets = useMemo(() => {
     return roadAssets.filter((asset) => {
@@ -74,7 +190,12 @@ export function RoadAssetExplorer() {
     });
   }, [companyId, query]);
 
-  const selectedAsset = selectedId ? roadAssets.find((asset) => asset.id === selectedId) : null;
+  const selectedAsset = selectedId ? roadAssets.find((asset) => asset.id === selectedId) ?? null : null;
+  const displayedAssets = useMemo(
+    () => assetsForMap(visibleAssets, selectedAsset),
+    [selectedAsset, visibleAssets],
+  );
+  const fallbackBounds = useMemo(() => boundsFor(displayedAssets), [displayedAssets]);
 
   const selectAsset = useCallback((assetId: string | null) => {
     setSelectedId(assetId);
@@ -101,85 +222,79 @@ export function RoadAssetExplorer() {
 
   useEffect(() => {
     let cancelled = false;
+    const amapKey = process.env.NEXT_PUBLIC_AMAP_KEY?.trim();
+    const amapSecurityCode = process.env.NEXT_PUBLIC_AMAP_SECURITY_CODE?.trim();
 
-    import("leaflet").then((L) => {
+    if (!amapKey) {
+      return;
+    }
+
+    loadAmap(amapKey, amapSecurityCode).then((AMap) => {
       if (cancelled || mapRef.current) {
         return;
       }
 
-      leafletRef.current = L;
-      const map = L.map("asset-map", {
-        center: [30.9, 119.3],
+      const map = new AMap.Map("asset-map", {
+        center: [119.3, 30.9],
         zoom: 6,
-        zoomControl: false,
+        resizeEnable: true,
+        viewMode: "2D",
       });
-
-      L.control.zoom({ position: "bottomright" }).addTo(map);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors",
-        maxZoom: 18,
-      }).addTo(map);
-
-      layersRef.current = L.layerGroup().addTo(map);
       mapRef.current = map;
-      setMapReady(true);
-
-      requestAnimationFrame(() => {
-        map.invalidateSize();
-      });
+      setMapProvider("amap");
+    }).catch(() => {
+      if (!cancelled) {
+        setMapProvider("failed");
+      }
     });
 
     return () => {
       cancelled = true;
-      mapRef.current?.remove();
+      overlaysRef.current = [];
+      mapRef.current?.destroy();
       mapRef.current = null;
-      layersRef.current = null;
-      leafletRef.current = null;
     };
   }, []);
 
   useEffect(() => {
-    const L = leafletRef.current;
     const map = mapRef.current;
-    const layers = layersRef.current;
-    if (!mapReady || !L || !map || !layers) {
+    if (mapProvider !== "amap" || !map || !window.AMap) {
       return;
     }
 
-    layers.clearLayers();
-    const assetsToDraw = visibleAssets.length ? visibleAssets : roadAssets;
-    const bounds = L.latLngBounds([]);
+    if (overlaysRef.current.length) {
+      map.remove(overlaysRef.current);
+      overlaysRef.current = [];
+    }
 
-    assetsToDraw.forEach((asset) => {
+    const overlays = displayedAssets.map((asset) => {
       const active = selectedAsset?.id === asset.id;
-      const company = getCompany(asset.ownerCompanyId);
-      const polyline = L.polyline(pathOf(asset), {
-        color: active ? "#d64a3a" : "#287a70",
-        opacity: active ? 0.98 : 0.74,
-        weight: active ? 8 : 5,
+      const polyline = new window.AMap.Polyline({
+        path: pathOf(asset),
+        strokeColor: active ? "#d64a3a" : "#287a70",
+        strokeOpacity: active ? 0.98 : 0.74,
+        strokeWeight: active ? 8 : 5,
         lineCap: "round",
         lineJoin: "round",
+        zIndex: active ? 30 : 20,
+        extData: { assetId: asset.id },
       });
 
       polyline.on("click", () => selectAsset(asset.id));
-      polyline.bindTooltip(`${asset.name}${company ? ` / ${company.shortName}` : ""}`, {
-        direction: "top",
-        sticky: true,
-      });
-      polyline.addTo(layers);
-      pathOf(asset).forEach((point) => bounds.extend(point));
+      return polyline;
     });
 
-    if (selectedAsset) {
-      const selectedBounds = L.latLngBounds(pathOf(selectedAsset));
-      map.fitBounds(selectedBounds.pad(0.55), { animate: true, maxZoom: 9 });
-      return;
-    }
+    map.add(overlays);
+    overlaysRef.current = overlays;
 
-    if (bounds.isValid()) {
-      map.fitBounds(bounds.pad(0.18), { animate: true });
+    const focusOverlays = selectedAsset
+      ? overlays.filter((_, index) => displayedAssets[index].id === selectedAsset.id)
+      : overlays;
+
+    if (focusOverlays.length) {
+      map.setFitView(focusOverlays, false, [48, 48, 48, 48], selectedAsset ? 10 : 7);
     }
-  }, [mapReady, selectAsset, selectedAsset, visibleAssets]);
+  }, [displayedAssets, mapProvider, selectAsset, selectedAsset]);
 
   return (
     <main className="map-shell">
@@ -190,7 +305,34 @@ export function RoadAssetExplorer() {
           <span className="map-label anhui">安徽</span>
           <span className="map-label guangdong">广东</span>
         </div>
+        <svg className="fallback-routes" viewBox="0 0 1000 1000" aria-label="路产线路兜底图">
+          {displayedAssets.map((asset) => {
+            const active = selectedAsset?.id === asset.id;
+            const company = getCompany(asset.ownerCompanyId);
+            return (
+              <path
+                className={active ? "fallback-route active" : "fallback-route"}
+                d={fallbackPath(asset, fallbackBounds)}
+                key={asset.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => selectAsset(asset.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    selectAsset(asset.id);
+                  }
+                }}
+              >
+                <title>{`${asset.name}${company ? ` / ${company.shortName}` : ""}`}</title>
+              </path>
+            );
+          })}
+        </svg>
         <div id="asset-map" />
+        {mapProvider === "failed" ? (
+          <div className="map-provider-status" role="status">高德地图加载失败，当前显示本地路线兜底。</div>
+        ) : null}
       </section>
 
       <aside className="asset-detail" aria-label="选中路产信息">
