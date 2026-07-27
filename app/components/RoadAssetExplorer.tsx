@@ -9,7 +9,6 @@ import {
   ExternalLink,
   GitBranch,
   Layers,
-  MapPinned,
   Route,
   Search,
   ShieldAlert,
@@ -185,90 +184,108 @@ export function RoadAssetExplorer() {
   return (
     <main className="map-shell">
       <section className="map-stage" aria-label="路产地图">
-        <div id="asset-map" />
-        <div className="map-controls">
-          <div className="map-brand">
-            <div className="icon-chip" aria-hidden="true">
-              <MapPinned size={21} />
-            </div>
-            <div>
-              <h1>路桥资产地图</h1>
-              <p>先从上市公司梳理路产，再把单条路标到地图上。</p>
-            </div>
-          </div>
-
-          <div className="filter-row">
-            <label className="select-box">
-              <span>上市公司</span>
-              <select
-                value={companyId}
-                onChange={(event) => {
-                  setCompanyId(event.target.value);
-                  selectAsset(null);
-                }}
-              >
-                <option value="all">全部路桥公司</option>
-                {listedRoadCompanies.map((company) => (
-                  <option key={company.id} value={company.id}>
-                    {company.shortName}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="map-search">
-              <Search size={17} />
-              <input
-                value={query}
-                onChange={(event) => {
-                  setQuery(event.target.value);
-                  selectAsset(null);
-                }}
-                placeholder="搜索路名、公司、股票代码"
-                aria-label="搜索路名、公司、股票代码"
-              />
-            </label>
-          </div>
-
-          <div className="asset-strip" aria-label="当前筛选出的路产">
-            {visibleAssets.length ? (
-              visibleAssets.map((asset) => (
-                <button
-                  className="asset-token"
-                  key={asset.id}
-                  type="button"
-                  aria-pressed={selectedId === asset.id}
-                  onClick={() => selectAsset(asset.id)}
-                >
-                  <Route size={14} />
-                  <span>{asset.name}</span>
-                </button>
-              ))
-            ) : (
-              <span className="strip-empty">没有匹配路产</span>
-            )}
-          </div>
+        <div className="map-fallback" aria-hidden="true">
+          <span className="map-label jiangsu">江苏</span>
+          <span className="map-label zhejiang">浙江</span>
+          <span className="map-label anhui">安徽</span>
+          <span className="map-label guangdong">广东</span>
         </div>
+        <div id="asset-map" />
       </section>
 
       <aside className="asset-detail" aria-label="选中路产信息">
         {selectedAsset ? (
           <AssetDetail asset={selectedAsset} />
         ) : (
-          <EmptyDetail />
+          <EmptyDetail
+            companyId={companyId}
+            query={query}
+            visibleAssets={visibleAssets}
+            onCompanyChange={(nextCompanyId) => setCompanyId(nextCompanyId)}
+            onQueryChange={(nextQuery) => setQuery(nextQuery)}
+            onSelectAsset={selectAsset}
+          />
         )}
       </aside>
     </main>
   );
 }
 
-function EmptyDetail() {
+function EmptyDetail({
+  companyId,
+  query,
+  visibleAssets,
+  onCompanyChange,
+  onQueryChange,
+  onSelectAsset,
+}: {
+  companyId: string;
+  query: string;
+  visibleAssets: RoadAsset[];
+  onCompanyChange: (companyId: string) => void;
+  onQueryChange: (query: string) => void;
+  onSelectAsset: (assetId: string) => void;
+}) {
   return (
-    <div className="panel-inner empty-detail">
-      <div className="empty-icon" aria-hidden="true">
-        <Route size={26} />
-      </div>
-      <h2>未选择路产</h2>
-      <p>点击地图上的线路，右侧只显示这条路本身的收费权、运营和归属信息。</p>
+    <div className="panel-inner">
+      <section className="empty-detail">
+        <div className="empty-icon" aria-hidden="true">
+          <Route size={26} />
+        </div>
+        <h2>未选择路产</h2>
+        <p>点击地图上的线路，右侧只显示这条路本身的收费权、运营和归属信息。</p>
+      </section>
+
+      <section className="detail-section">
+        <h3 className="section-title">从上市公司开始</h3>
+        <label className="select-box">
+          <span>上市公司</span>
+          <select
+            value={companyId}
+            onChange={(event) => onCompanyChange(event.target.value)}
+          >
+            <option value="all">全部路桥公司</option>
+            {listedRoadCompanies.map((company) => (
+              <option key={company.id} value={company.id}>
+                {company.shortName}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="panel-search">
+          <Search size={17} />
+          <input
+            value={query}
+            onChange={(event) => onQueryChange(event.target.value)}
+            placeholder="搜索路名、公司、股票代码"
+            aria-label="搜索路名、公司、股票代码"
+          />
+        </label>
+      </section>
+
+      <section className="detail-section">
+        <h3 className="section-title">路产资产</h3>
+        <div className="relation-list">
+          {visibleAssets.length ? (
+            visibleAssets.map((asset) => {
+              const company = getCompany(asset.ownerCompanyId);
+              return (
+                <button
+                  className="relation-item"
+                  key={asset.id}
+                  type="button"
+                  onClick={() => onSelectAsset(asset.id)}
+                >
+                  <strong>{asset.name}</strong>
+                  <span>{company?.shortName ?? "未绑定公司"} / {asset.corridor}</span>
+                </button>
+              );
+            })
+          ) : (
+            <div className="empty-state">没有匹配路产。</div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

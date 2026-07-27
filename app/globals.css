@@ -63,80 +63,81 @@ a {
 .map-stage {
   position: relative;
   min-width: 0;
+  overflow: hidden;
   background: #dce6e3;
+}
+
+.map-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(118deg, transparent 0 29%, rgba(40, 122, 112, 0.12) 29.3% 29.8%, transparent 30% 100%),
+    linear-gradient(162deg, transparent 0 44%, rgba(40, 122, 112, 0.1) 44.2% 44.7%, transparent 45% 100%),
+    radial-gradient(circle at 61% 34%, rgba(31, 122, 106, 0.18), transparent 17%),
+    radial-gradient(circle at 55% 46%, rgba(255, 255, 255, 0.72), transparent 22%),
+    linear-gradient(180deg, #e7ecea, #d6e1de);
+}
+
+.map-fallback::before,
+.map-fallback::after {
+  position: absolute;
+  content: "";
+  border: 1px solid rgba(103, 126, 120, 0.2);
+  border-radius: 46% 54% 55% 45%;
+}
+
+.map-fallback::before {
+  width: 42%;
+  height: 34%;
+  left: 38%;
+  top: 21%;
+  transform: rotate(-18deg);
+}
+
+.map-fallback::after {
+  width: 28%;
+  height: 24%;
+  left: 14%;
+  top: 48%;
+  transform: rotate(12deg);
+}
+
+.map-label {
+  position: absolute;
+  color: rgba(23, 33, 31, 0.36);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.map-label.jiangsu {
+  left: 61%;
+  top: 35%;
+}
+
+.map-label.zhejiang {
+  left: 62%;
+  top: 55%;
+}
+
+.map-label.anhui {
+  left: 45%;
+  top: 43%;
+}
+
+.map-label.guangdong {
+  left: 43%;
+  top: 80%;
 }
 
 #asset-map {
   position: absolute;
   inset: 0;
-  z-index: 0;
-}
-
-.map-controls {
-  position: absolute;
-  z-index: 500;
-  left: 18px;
-  right: 18px;
-  top: 18px;
-  display: grid;
-  gap: 12px;
-  pointer-events: none;
-}
-
-.map-brand,
-.filter-row,
-.asset-strip {
-  border: 1px solid rgba(216, 224, 221, 0.94);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 12px 30px rgba(23, 33, 31, 0.12);
-  pointer-events: auto;
-}
-
-.map-brand {
-  display: flex;
-  width: min(520px, 100%);
-  align-items: flex-start;
-  gap: 12px;
-  padding: 13px 14px;
-}
-
-.map-brand h1 {
-  margin: 0;
-  font-size: 21px;
-  line-height: 1.15;
-  letter-spacing: 0;
-}
-
-.map-brand p {
-  margin: 5px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.icon-chip {
-  display: grid;
-  width: 38px;
-  height: 38px;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel-soft);
-  color: var(--accent-strong);
-}
-
-.filter-row {
-  display: grid;
-  width: min(760px, 100%);
-  grid-template-columns: minmax(180px, 240px) minmax(260px, 1fr);
-  gap: 10px;
-  padding: 10px;
+  z-index: 1;
 }
 
 .select-box,
-.map-search {
+.panel-search {
   position: relative;
   display: flex;
   min-width: 0;
@@ -150,7 +151,7 @@ a {
 }
 
 .select-box select,
-.map-search input {
+.panel-search input {
   width: 100%;
   height: 38px;
   border: 1px solid var(--line);
@@ -164,55 +165,25 @@ a {
   padding: 0 10px;
 }
 
-.map-search svg {
+.panel-search {
+  margin-top: 10px;
+}
+
+.panel-search svg {
   position: absolute;
   left: 11px;
-  bottom: 10px;
+  top: 10px;
   color: var(--muted);
 }
 
-.map-search input {
+.panel-search input {
   padding: 0 12px 0 36px;
 }
 
 .select-box select:focus,
-.map-search input:focus {
+.panel-search input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(31, 122, 106, 0.13);
-}
-
-.asset-strip {
-  display: flex;
-  width: min(900px, 100%);
-  gap: 8px;
-  overflow-x: auto;
-  padding: 9px;
-}
-
-.asset-token {
-  display: inline-flex;
-  min-height: 34px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--foreground);
-  padding: 0 10px;
-  white-space: nowrap;
-}
-
-.asset-token[aria-pressed="true"] {
-  border-color: var(--road);
-  background: rgba(214, 74, 58, 0.1);
-  color: #8f3025;
-}
-
-.strip-empty {
-  color: var(--muted);
-  font-size: 13px;
-  padding: 7px 4px;
 }
 
 .asset-detail {
@@ -232,8 +203,8 @@ a {
 
 .empty-detail {
   align-items: center;
-  justify-content: center;
   text-align: center;
+  padding: 12px 0 4px;
 }
 
 .empty-detail h2 {
@@ -259,6 +230,10 @@ a {
   border-radius: 8px;
   background: var(--panel-soft);
   color: var(--accent-strong);
+}
+
+.leaflet-container {
+  background: transparent;
 }
 
 .status-pill {
@@ -572,16 +547,6 @@ a {
 }
 
 @media (max-width: 700px) {
-  .map-controls {
-    left: 10px;
-    right: 10px;
-    top: 10px;
-  }
-
-  .filter-row {
-    grid-template-columns: 1fr;
-  }
-
   .fact-grid,
   .asset-mini-ledger {
     grid-template-columns: 1fr;
