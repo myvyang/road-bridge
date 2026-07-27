@@ -91,5 +91,6 @@ GITHUB_PAGES=true GITHUB_PAGES_BASE_PATH=/road-bridge npm run build:pages
 - `app/data/roadAssets.ts`：字段类型、数据聚合和查询函数。
 - `data/research-ledger.json`：内部研究台账，记录来源、字段状态和采集备注，不导入公开页面。
 - `docs/data-model.md`：后续真实数据入库模型。
+- `docs/company-reconciliations/`：单家公司路产与财报拆解报告。
 - `.github/workflows/pages.yml`：GitHub Pages 静态站发布流程。
 - `project-memory/`：长期开发判断和当前状态。
