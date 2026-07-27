@@ -1,6 +1,6 @@
 # 当前状态
 
-更新时间：2026-07-27T17:42:39+08:00 Asia/Shanghai
+更新时间：2026-07-27T17:56:30+08:00 Asia/Shanghai
 
 ## 已完成
 
@@ -14,6 +14,7 @@
 - 路产几何数据模型已明确为 GCJ-02，点格式为 `[经度, 纬度]`。
 - 发布目标已改为 GitHub Pages；项目已移除 OpenAI Sites / Vinext / Cloudflare Worker 默认发布路径。
 - 新增 GitHub Actions 工作流，推送 `main` 后静态导出并部署到 `https://myvyang.github.io/road-bridge/`。
+- GitHub Pages 已启用为 workflow 发布，最新部署已成功，线上 URL 返回 200。
 - 建立第一版上市公司与路产字段模型和样例数据。
 - 写入项目入口文档、数据模型和项目记忆。
 
@@ -24,11 +25,11 @@
 - 高德真实底图需要在运行环境配置 `NEXT_PUBLIC_AMAP_KEY`，必要时还需要 `NEXT_PUBLIC_AMAP_SECURITY_CODE`。
 - 收费期限、建设成本、开通时间、单路收入和运营指标需要逐条追溯来源。
 - 年报合并披露的收入和利润后续需要保留披露范围，不能强拆。
-- GitHub Pages 仓库设置需要选择 `GitHub Actions` 作为 Pages Source。
+- 生产环境真实高德底图仍依赖 GitHub Actions secrets 中的 `NEXT_PUBLIC_AMAP_KEY`。
 
 ## 下一步
 
-- 在 GitHub Actions secrets 中配置高德地图 Key。
+- 在 GitHub Actions secrets 中配置高德地图 Key，替换线上兜底路线图为真实高德底图。
 - 为首批路桥上市公司建立真实数据采集清单。
 - 增加来源链接、披露页码和字段置信度。
 - 按 `docs/map-provider.md` 为每条已确认路产补充合规来源的 GCJ-02 路线几何。
