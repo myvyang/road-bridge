@@ -42,6 +42,8 @@ test("exports a stock asset list without the map workspace", async () => {
   assert.match(html, /2025年：55.05亿元/);
   assert.match(html, /2025年广靖\/锡澄合并披露：7.70亿元/);
   assert.match(html, /2021年6月至2046年6月/);
+  assert.match(html, /苏交财〔2025〕27号暂不核定收费年限/);
+  assert.match(html, /过渡期暂行5年/);
   assert.match(html, /地图中查看/);
   assert.doesNotMatch(html, /待核验|样例|数据来源状态|需要穿透/);
   assert.doesNotMatch(html, /id="asset-map"/);

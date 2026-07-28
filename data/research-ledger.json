@@ -37,7 +37,10 @@
     "sourceUrl": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12034601&stockid=600377",
     "additionalSourceUrls": [
       "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-02-10/242387_20250210_HDCB.pdf",
-      "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-05-12/175706_20250512_NJI4.pdf"
+      "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-05-12/175706_20250512_NJI4.pdf",
+      "https://jtyst.jiangsu.gov.cn/art/2025/12/9/art_77204_11688134.html",
+      "https://jtyst.jiangsu.gov.cn/art/2025/5/13/art_77126_11563748.html",
+      "https://www.lixinger.com/equity/company/detail/sh/600377/600377/shareholders-interactions"
     ],
     "assetIds": [
       "jiangsu-huning",
@@ -71,8 +74,9 @@
     "notes": [
       "Construction-period revenue and cost of 8.156 billion yuan are excluded from road operating purity and reconciled to concession asset capex.",
       "Guangjing/Xicheng, Xiyi/Huantaihu, and Ningchang/Zhenli remain combined disclosure units for revenue and cost; do not allocate to individual roads without official disclosure.",
-      "Ningyang Yangtze River Bridge generated 2025 toll revenue and is included in public data with confirmed operating facts; formal toll period, base toll standard, and approval reference have not been captured from an official source, so those fields remain blank.",
-      "Xiyi south expansion opened on 2025-12-11, but official evidence for toll term extension has not been captured; keep original 2003.9-2028.9 toll period with risk note until approved source is found.",
+      "Ningyang Yangtze River Bridge generated 2025 toll revenue and is included in public data with confirmed operating facts; company investor interaction states it currently uses a transitional tolling plan for 5 years, while the final tolling term will be calculated after the Toll Road Regulation revision.",
+      "Jiangsu transport, development reform, and finance authorities state that Wuxi-Yixing Expressway is an operating expressway and no tolling term is currently approved; the term will be approved after the expansion project is fully completed.",
+      "Ningyang Yangtze River Bridge base toll standard amount and formal approval reference were not captured from an official public text; keep those fields out of public hard fields.",
       "Route geometry is a manually maintained GCJ-02 corridor line based on public place endpoints, not licensed road-vector geometry."
     ]
   },

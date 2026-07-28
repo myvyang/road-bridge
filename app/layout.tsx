@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const githubPagesBasePath = process.env.GITHUB_PAGES_BASE_PATH ?? "/road-bridge";
 const publicBasePath = process.env.GITHUB_PAGES === "true" ? githubPagesBasePath : "";
 const faviconPath = `${publicBasePath}/favicon.svg`;
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "路桥资产地图",
@@ -32,9 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
