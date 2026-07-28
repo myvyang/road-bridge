@@ -75,5 +75,40 @@
       "Xiyi south expansion opened on 2025-12-11, but official evidence for toll term extension has not been captured; keep original 2003.9-2028.9 toll period with risk note until approved source is found.",
       "Route geometry still needs GCJ-02 corridor lines or licensed road-vector data before public map ingestion."
     ]
+  },
+  {
+    "companyId": "jilin-expressway",
+    "sourceTitle": "吉林高速：2025年年度报告；2024年年度报告",
+    "sourceDate": "2026-04-11 / 2025-04-11",
+    "sourceUrl": "https://www.jlgsgl.com/storage/2026/6b/1f7d3d495bf1864bce4ceae1ae4cf9.pdf",
+    "additionalSourceUrls": [
+      "https://www.jlgsgl.com/storage/2025/e6/fbc836a91c347ea8b1fc58a2a44a14.pdf",
+      "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12078828&stockid=601518"
+    ],
+    "assetIds": [
+      "jilin-changping",
+      "jilin-changchun-ring-northwest"
+    ],
+    "fields": [
+      "asset name",
+      "total toll mileage",
+      "toll period",
+      "approval reference",
+      "operator or project company",
+      "2025 revenue",
+      "2025 operating cost where disclosed",
+      "2023-2025 company financial series",
+      "2024-2025 toll business revenue and cost",
+      "major non-toll business",
+      "unresolved field boundary"
+    ],
+    "notes": [
+      "Jilin Expressway has no disclosed construction-period revenue; adjusted operating revenue equals reported revenue.",
+      "Toll revenue was 1.116 billion yuan in 2025, 81.61% of reported revenue; toll business revenue was 1.119 billion yuan with 63.48% gross margin.",
+      "Non-toll revenue is mainly Kewei electromechanical engineering; treat it as a separate non-toll business, not construction service revenue to exclude.",
+      "The company discloses total toll mileage of 151.7 km but does not split mileage between Changping Expressway and Changchun Ring Expressway northwest section in the captured official sources.",
+      "Changchun Ring Expressway northwest section cost is not separately disclosed; do not use derived cost as a public hard field.",
+      "Route geometry still needs GCJ-02 corridor lines or licensed road-vector data before public map ingestion."
+    ]
   }
 ]
