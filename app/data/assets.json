@@ -3,55 +3,360 @@
     "id": "jiangsu-huning",
     "ownerCompanyId": "jiangsu-expressway",
     "name": "沪宁高速江苏段",
+    "routeCode": "G42 沪蓉高速",
     "corridor": "上海至南京主通道",
     "province": "江苏",
     "assetType": "高速公路",
-    "operator": "上市公司及附属运营主体",
-    "openedAt": "—",
-    "tollTerm": "—",
-    "remainingTerm": "—",
+    "endpoints": "南京马群 / 上海安亭",
+    "operator": "宁沪高速及附属运营主体",
+    "openedAt": "1996年9月",
+    "tollTerm": "1996年9月至2032年6月",
+    "remainingTerm": "约5年11个月（按2026年7月估算）",
     "buildOrAcquisitionCost": "—",
-    "lengthKm": 274,
-    "annualRevenue": "—",
-    "traffic": "—",
-    "freightShare": "—",
+    "lengthKm": 248.21,
+    "annualRevenue": "2025年：55.05亿元",
+    "operatingCost": "2025年：20.23亿元",
+    "traffic": "2025年：116,616辆/日",
+    "freightShare": "货车22,398辆/日，占19.21%",
     "geometry": {
       "coordinateSystem": "gcj02",
       "path": [
-        [120.309, 31.586],
-        [119.974, 31.651],
-        [119.444, 31.78],
-        [118.796, 31.988]
+        [118.83, 32.05],
+        [119.18, 32.03],
+        [119.45, 32.1],
+        [119.97, 31.82],
+        [120.31, 31.57],
+        [120.98, 31.38],
+        [121.15, 31.3]
       ]
     },
-    "relatedAssetIds": ["jiangsu-ningchang", "anhui-hening", "zhejiang-huhangyong"]
+    "relatedAssetIds": ["jiangsu-guangjing", "jiangsu-xicheng", "jiangsu-ningchang", "anhui-hening", "zhejiang-huhangyong"]
+  },
+  {
+    "id": "jiangsu-guangjing",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "广靖高速",
+    "routeCode": "G2 京沪高速",
+    "corridor": "泰州至无锡过江通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "广陵 / 江阴大桥北端",
+    "ownership": "集团直接持股85%（项目公司口径）",
+    "operator": "广靖锡澄公司",
+    "openedAt": "1999年9月",
+    "tollTerm": "1999年9月至2029年9月",
+    "remainingTerm": "约3年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 17.2,
+    "annualRevenue": "2025年广靖/锡澄合并披露：7.70亿元",
+    "operatingCost": "2025年广靖/锡澄合并披露：2.25亿元",
+    "traffic": "2025年：61,419辆/日",
+    "freightShare": "货车13,153辆/日，占21.42%",
+    "disclosureScope": "广靖高速及锡澄高速合并披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.04, 32.27],
+        [120.14, 32.11],
+        [120.23, 31.93]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-xicheng", "jiangsu-wufengshan"]
+  },
+  {
+    "id": "jiangsu-xicheng",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "锡澄高速",
+    "routeCode": "G2 京沪高速",
+    "corridor": "江阴至无锡通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "江阴大桥南端 / 无锡钱巷",
+    "ownership": "集团直接持股85%（项目公司口径）",
+    "operator": "广靖锡澄公司",
+    "openedAt": "1999年9月",
+    "tollTerm": "1999年9月至2029年9月",
+    "remainingTerm": "约3年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 35,
+    "annualRevenue": "2025年广靖/锡澄合并披露：7.70亿元",
+    "operatingCost": "2025年广靖/锡澄合并披露：2.25亿元",
+    "traffic": "2025年：74,236辆/日",
+    "freightShare": "货车16,029辆/日，占21.59%",
+    "disclosureScope": "广靖高速及锡澄高速合并披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.27, 31.91],
+        [120.3, 31.75],
+        [120.3, 31.6]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-guangjing", "jiangsu-huning", "jiangsu-xiyi", "jiangsu-huantaihu"]
+  },
+  {
+    "id": "jiangsu-xiyi",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "锡宜高速",
+    "corridor": "无锡至宜兴通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "无锡北 / 宜兴西坞枢纽",
+    "operator": "广靖锡澄公司",
+    "openedAt": "2003年9月",
+    "tollTerm": "2003年9月至2028年9月",
+    "remainingTerm": "约2年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 69.3,
+    "annualRevenue": "2025年锡宜/无锡环太湖合并披露：4.60亿元",
+    "operatingCost": "2025年锡宜/无锡环太湖合并披露：2.67亿元",
+    "traffic": "2025年：25,545辆/日",
+    "freightShare": "货车6,602辆/日，占25.85%",
+    "disclosureScope": "锡宜高速及无锡环太湖公路合并披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.29, 31.67],
+        [120.08, 31.55],
+        [119.86, 31.38],
+        [119.73, 31.28]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-xicheng", "jiangsu-huantaihu", "jiangsu-changyi", "jiangsu-yichang"]
+  },
+  {
+    "id": "jiangsu-huantaihu",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "无锡环太湖公路",
+    "corridor": "无锡太湖沿线通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "硕放枢纽 / 南泉互通",
+    "operator": "广靖锡澄公司",
+    "openedAt": "2006年10月",
+    "tollTerm": "2006年10月至2031年10月",
+    "remainingTerm": "约5年3个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 20,
+    "annualRevenue": "2025年锡宜/无锡环太湖合并披露：4.60亿元",
+    "operatingCost": "2025年锡宜/无锡环太湖合并披露：2.67亿元",
+    "traffic": "2025年：38,593辆/日",
+    "freightShare": "货车4,778辆/日，占12.38%",
+    "disclosureScope": "锡宜高速及无锡环太湖公路合并披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [120.46, 31.5],
+        [120.38, 31.43],
+        [120.27, 31.36]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-xiyi", "jiangsu-xicheng"]
   },
   {
     "id": "jiangsu-ningchang",
     "ownerCompanyId": "jiangsu-expressway",
-    "name": "南京至常州高速",
+    "name": "宁常高速",
     "corridor": "南京都市圈至苏南通道",
     "province": "江苏",
     "assetType": "高速公路",
-    "operator": "—",
-    "openedAt": "—",
-    "tollTerm": "—",
-    "remainingTerm": "—",
+    "endpoints": "溧水桂庄枢纽 / 常州南互通",
+    "operator": "江苏宁常镇溧高速公路有限公司",
+    "openedAt": "2007年9月",
+    "tollTerm": "2007年9月至2032年9月",
+    "remainingTerm": "约6年2个月（按2026年7月估算）",
     "buildOrAcquisitionCost": "—",
-    "lengthKm": 87,
-    "annualRevenue": "—",
-    "traffic": "—",
-    "freightShare": "—",
+    "lengthKm": 87.26,
+    "annualRevenue": "2025年宁常/镇溧合并披露：11.19亿元",
+    "operatingCost": "2025年宁常/镇溧合并披露：4.71亿元",
+    "traffic": "2025年：48,269辆/日",
+    "freightShare": "货车12,339辆/日，占25.56%",
+    "disclosureScope": "宁常高速及镇溧高速合并披露",
     "geometry": {
       "coordinateSystem": "gcj02",
       "path": [
-        [118.886, 31.902],
-        [119.192, 31.812],
-        [119.558, 31.742],
-        [119.946, 31.704]
+        [118.98, 31.65],
+        [119.2, 31.63],
+        [119.5, 31.66],
+        [119.89, 31.72]
       ]
     },
-    "relatedAssetIds": ["jiangsu-huning"]
+    "relatedAssetIds": ["jiangsu-huning", "jiangsu-zhenli", "jiangsu-changyi"]
+  },
+  {
+    "id": "jiangsu-zhenli",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "镇溧高速",
+    "corridor": "镇江至溧阳通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "丹徒枢纽 / 溧阳前马",
+    "operator": "江苏宁常镇溧高速公路有限公司",
+    "openedAt": "2007年9月",
+    "tollTerm": "2007年9月至2032年9月",
+    "remainingTerm": "约6年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 65.66,
+    "annualRevenue": "2025年宁常/镇溧合并披露：11.19亿元",
+    "operatingCost": "2025年宁常/镇溧合并披露：4.71亿元",
+    "traffic": "2025年：17,030辆/日",
+    "freightShare": "货车4,104辆/日，占24.10%",
+    "disclosureScope": "宁常高速及镇溧高速合并披露",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.48, 32.09],
+        [119.45, 31.82],
+        [119.4, 31.55],
+        [119.47, 31.35]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-ningchang", "jiangsu-zhendan"]
+  },
+  {
+    "id": "jiangsu-zhendan",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "镇丹高速",
+    "corridor": "镇江至丹阳通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "泰州大桥大港枢纽 / 丹阳新区枢纽",
+    "ownership": "集团直接持股70%（项目公司口径）",
+    "operator": "镇丹公司",
+    "openedAt": "2018年9月",
+    "tollTerm": "2018年9月至2043年9月",
+    "remainingTerm": "约17年2个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 21.6,
+    "annualRevenue": "2025年：0.99亿元",
+    "operatingCost": "2025年：0.78亿元",
+    "traffic": "2025年：24,783辆/日",
+    "freightShare": "货车3,689辆/日，占14.89%",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.7, 32.18],
+        [119.78, 32.05],
+        [119.63, 31.98]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-zhenli", "jiangsu-wufengshan", "jiangsu-ningyang-bridge"]
+  },
+  {
+    "id": "jiangsu-changyi",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "常宜高速",
+    "corridor": "常州至宜兴通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "常州武进 / 宜兴",
+    "ownership": "集团间接持股60%（项目公司口径）",
+    "operator": "常宜公司",
+    "openedAt": "2020年12月",
+    "tollTerm": "2020年12月至2045年12月",
+    "remainingTerm": "约19年5个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 17.71,
+    "annualRevenue": "2025年：1.26亿元",
+    "operatingCost": "2025年：1.21亿元",
+    "traffic": "2025年：34,770辆/日",
+    "freightShare": "货车9,647辆/日，占27.74%",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.95, 31.72],
+        [119.86, 31.55],
+        [119.73, 31.37]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-xiyi", "jiangsu-yichang", "jiangsu-ningchang"]
+  },
+  {
+    "id": "jiangsu-yichang",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "宜长高速",
+    "corridor": "宜兴至长兴方向通道",
+    "province": "江苏",
+    "assetType": "高速公路",
+    "endpoints": "长深高速徐舍互通西侧 / 宜兴葡萄岭隧道",
+    "ownership": "集团间接持股60%（项目公司口径）",
+    "operator": "宜长公司",
+    "openedAt": "2021年1月",
+    "tollTerm": "2021年1月至2046年1月",
+    "remainingTerm": "约19年6个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 25.46,
+    "annualRevenue": "2025年：1.21亿元",
+    "operatingCost": "2025年：0.84亿元",
+    "traffic": "2025年：22,110辆/日",
+    "freightShare": "货车6,114辆/日，占27.65%",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.73, 31.37],
+        [119.66, 31.28],
+        [119.57, 31.2]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-changyi", "jiangsu-xiyi"]
+  },
+  {
+    "id": "jiangsu-wufengshan",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "五峰山大桥",
+    "corridor": "扬州至镇江过江通道",
+    "province": "江苏",
+    "assetType": "桥梁",
+    "endpoints": "正谊枢纽 / 大港枢纽",
+    "ownership": "集团直接持股64.5%（项目公司口径）",
+    "operator": "五峰山大桥公司",
+    "openedAt": "2021年6月",
+    "tollTerm": "2021年6月至2046年6月",
+    "remainingTerm": "约19年11个月（按2026年7月估算）",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 35.92,
+    "annualRevenue": "2025年：13.17亿元",
+    "operatingCost": "2025年：4.83亿元",
+    "traffic": "2025年：53,672辆/日",
+    "freightShare": "货车16,974辆/日，占31.62%",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.62, 32.2],
+        [119.55, 32.1],
+        [119.5, 32]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-guangjing", "jiangsu-zhendan", "jiangsu-ningyang-bridge"]
+  },
+  {
+    "id": "jiangsu-ningyang-bridge",
+    "ownerCompanyId": "jiangsu-expressway",
+    "name": "宁扬长江大桥",
+    "corridor": "南京至扬州过江通道",
+    "province": "江苏",
+    "assetType": "桥梁",
+    "endpoints": "仪征江北长江大堤 / S338省道",
+    "ownership": "集团直接持股63.8%（项目公司口径）",
+    "operator": "龙潭大桥公司",
+    "openedAt": "2025年",
+    "tollTerm": "—",
+    "remainingTerm": "—",
+    "buildOrAcquisitionCost": "—",
+    "lengthKm": 5,
+    "annualRevenue": "2025年：0.38亿元",
+    "operatingCost": "2025年：0.66亿元",
+    "traffic": "2025年：2,693辆/日",
+    "freightShare": "货车715辆/日，占26.55%",
+    "geometry": {
+      "coordinateSystem": "gcj02",
+      "path": [
+        [119.08, 32.28],
+        [119, 32.18],
+        [118.96, 32.08]
+      ]
+    },
+    "relatedAssetIds": ["jiangsu-wufengshan", "jiangsu-zhendan"]
   },
   {
     "id": "zhejiang-huhangyong",
