@@ -29,5 +29,51 @@
       "Revenue table discloses Huang-Xian Expressway as one line, while the operation term table splits Xianning and Huangshi segments.",
       "Route geometry is a manually maintained corridor line based on public place endpoints, not licensed road-vector geometry."
     ]
+  },
+  {
+    "companyId": "jiangsu-expressway",
+    "sourceTitle": "宁沪高速：2025年年度报告；2025年面向专业投资者公开发行公司债券（第一期）募集说明书；2025年度跟踪评级报告",
+    "sourceDate": "2026-03-30 / 2025-02-10 / 2025-05-12",
+    "sourceUrl": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12034601&stockid=600377",
+    "additionalSourceUrls": [
+      "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-02-10/242387_20250210_HDCB.pdf",
+      "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-05-12/175706_20250512_NJI4.pdf"
+    ],
+    "assetIds": [
+      "jiangsu-huning",
+      "jiangsu-guangjing",
+      "jiangsu-xicheng",
+      "jiangsu-xiyi",
+      "jiangsu-huantaihu",
+      "jiangsu-ningchang",
+      "jiangsu-zhenli",
+      "jiangsu-zhendan",
+      "jiangsu-changyi",
+      "jiangsu-yichang",
+      "jiangsu-wufengshan",
+      "jiangsu-ningyang-bridge"
+    ],
+    "fields": [
+      "asset name",
+      "endpoints",
+      "toll length",
+      "lane count",
+      "toll period",
+      "approval reference",
+      "operator or project company",
+      "2023-2025 revenue",
+      "2023-2025 operating cost",
+      "2023-2025 gross margin",
+      "2025 traffic",
+      "2025 daily toll income",
+      "base toll standards"
+    ],
+    "notes": [
+      "Construction-period revenue and cost of 8.156 billion yuan are excluded from road operating purity and reconciled to concession asset capex.",
+      "Guangjing/Xicheng, Xiyi/Huantaihu, and Ningchang/Zhenli remain combined disclosure units for revenue and cost; do not allocate to individual roads without official disclosure.",
+      "Ningyang Yangtze River Bridge generated 2025 toll revenue but formal toll period, base toll standard, and approval reference have not been captured from an official source; keep those fields blank in public data.",
+      "Xiyi south expansion opened on 2025-12-11, but official evidence for toll term extension has not been captured; keep original 2003.9-2028.9 toll period with risk note until approved source is found.",
+      "Route geometry still needs GCJ-02 corridor lines or licensed road-vector data before public map ingestion."
+    ]
   }
 ]
